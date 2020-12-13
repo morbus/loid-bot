@@ -23,15 +23,23 @@ client.registry
 
   // LOID customs.
   .registerGroups([
-    ['incrementals', 'Incrementals']
+    ['incrementals', 'Incrementals'],
+    ['other', 'Other']
   ])
 
   // Register all commands in the ./commands/ directory.
   .registerCommandsIn(path.join(__dirname, 'commands'))
 
+client.login(process.env.BOT_TOKEN)
+
 client.once('ready', () => {
-  client.user.setPresence({ activity: { name: 'Being developed' }, status: 'idle' })
+  client.user.setPresence({
+    status: 'idle',
+    activity: {
+      type: 'WATCHING',
+      name: 'for ::begin'
+    }
+  })
+
   console.log('Ready!')
 })
-
-client.login(process.env.BOT_TOKEN)
