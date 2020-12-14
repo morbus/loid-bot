@@ -19,7 +19,8 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "discord.js-commando": "github:discordjs/Commando",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "snazzy": "^9.0.0",

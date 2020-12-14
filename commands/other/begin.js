@@ -3,6 +3,7 @@
  * @todo
  */
 
+'use strict'
 const { Command } = require('discord.js-commando')
 
 module.exports = class BeginCommand extends Command {
