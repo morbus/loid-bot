@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     jsonValue: {
       type: DataTypes.JSON,
-      comment: 'The JSON value of the state being stored (e.g. {complex: "values", are: "here"}).'
+      comment: 'The JSON value of the state being stored (e.g. {"complex": "values", "are": "here"}).'
     }
   })
 }
