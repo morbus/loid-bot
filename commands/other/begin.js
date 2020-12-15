@@ -29,13 +29,6 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
       explanation: 'd'
     })
 
-    this.client.guildMemberReductions.create({
-      userId: '1',
-      guildId: '2',
-      type: '3',
-      explanation: '4'
-    })
-
     return msg.say('begun')
   }
 }
