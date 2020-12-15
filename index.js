@@ -45,7 +45,7 @@ client.once('ready', () => {
   })
 })
 
-client.on('debug', message => client.logger.debug(message))
 client.on('error', message => client.logger.error(message))
 client.on('warn', message => client.logger.warn(message))
+client.on('debug', message => client.logger.debug(message))
 process.on('uncaughtException', message => client.logger.error(message))

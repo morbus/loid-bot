@@ -4,9 +4,9 @@
  */
 
 'use strict'
-const { Command } = require('discord.js-commando')
+const LoidBotCommandoCommand = require('../../lib/Command')
 
-module.exports = class BeginCommand extends Command {
+module.exports = class BeginCommand extends LoidBotCommandoCommand {
   constructor (client) {
     super(client, {
       name: 'begin',
@@ -19,6 +19,8 @@ module.exports = class BeginCommand extends Command {
   }
 
   run (msg, args) {
+    this.logger.debug('inside and working.')
+    this.logger.info(this.client.guilds.cache.size)
     return msg.say('begun')
   }
 }
