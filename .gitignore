@@ -1,4 +1,9 @@
 ################################################################################
+# Project-specific.                                                            #
+################################################################################
+LOIDBot.sqlite3
+
+################################################################################
 # macOS                                                                        #
 # https://github.com/github/gitignore/blob/master/Global/macOS.gitignore       #
 ################################################################################
@@ -45,6 +50,7 @@ Temporary Items
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
+.idea/**/dataSources.xml
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
