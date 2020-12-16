@@ -1,7 +1,6 @@
 
 # TODO
 
-  * Set sequelize to use winston logging.  
   * "begin" user creation and intro.
   * Mobs JSON and "attack" command.
   * Most commands should be guild only.
