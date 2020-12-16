@@ -1,5 +1,8 @@
 
 /**
+ * LOIDBot.js
+ * @author Morbus Iff <morbus@disobey.com>
+ *
  * The primary entry point that starts Land of the Idle Demons.
  */
 

@@ -1,19 +1,20 @@
 {
-  "name": "loid-bot",
+  "name": "loidbot",
   "version": "1.0.0",
   "author": "Morbus Iff <morbus@disobey.com>",
   "description": "Land of the Idle Demons is an incremental and idle RPG bot for Discord servers.",
-  "homepage": "https://github.com/morbus/loid-bot#readme",
+  "homepage": "https://github.com/morbus/loidbot#readme",
   "bugs": {
-    "url": "https://github.com/morbus/loid-bot/issues"
+    "url": "https://github.com/morbus/loidbot/issues"
   },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/morbus/loid-bot.git"
+    "url": "https://github.com/morbus/loidbot.git"
   },
-  "main": "index.js",
+  "main": "LOIDBot.js",
   "scripts": {
+    "start": "node LOIDBot.js",
     "lint": "standard --verbose | snazzy"
   },
   "dependencies": {
