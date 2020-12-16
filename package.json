@@ -2,7 +2,7 @@
   "name": "loidbot",
   "version": "1.0.0",
   "author": "Morbus Iff <morbus@disobey.com>",
-  "description": "Land of the Idle Demons is an incremental and idle RPG bot for Discord servers.",
+  "description": "Land of Idle Demons is an incremental and idle RPG bot for Discord servers.",
   "homepage": "https://github.com/morbus/loidbot#readme",
   "bugs": {
     "url": "https://github.com/morbus/loidbot/issues"

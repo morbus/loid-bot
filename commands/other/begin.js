@@ -1,6 +1,6 @@
 
 /**
- * @todo
+ * Begin the guild member's recovery of the Land of Idle Demons.
  */
 
 'use strict'
@@ -10,25 +10,14 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
   constructor (client) {
     super(client, {
       name: 'begin',
-      aliases: [''],
-      group: 'other',
       memberName: 'begin',
-      description: '@todo',
+      group: 'other',
+      description: 'Begin your recovery of the Land of Idle Demons.',
       hidden: true
     })
   }
 
   async run (msg, args) {
-    this.logger.debug('inside and working.')
-    this.logger.info(this.client.guilds.cache.size)
-
-    await this.guildMemberReductions.create({
-      userId: 'a',
-      guildId: 'b',
-      type: 'c',
-      explanation: 'd'
-    })
-
     return msg.say('begun')
   }
 }
