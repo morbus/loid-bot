@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
    * (type: "location") to the complex (type: "craft", subtype: "weapon",
    * subsubtype: "vorpalSword"), allowing you to generate statistics from
    * large to small ("I've crafted 817 things, of which 130 were weapons, and
-   * 17 were vorpalSwords."). Values can be stored as strings, floats, or JSON.
+   * 17 were vorpalSwords."). Values can be booleans, floats, strings, or JSON.
    */
   return sequelize.define('guildMemberState', {
     userId: {
@@ -39,13 +39,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       comment: 'The subsubtype of state being tracked (e.g., giant, vorpalSword, outtsButte).'
     },
-    stringValue: {
-      type: DataTypes.STRING,
-      comment: 'The string value of the state being stored (e.g., outtsbutte, finalGirl).'
+    booleanValue: {
+      type: DataTypes.BOOLEAN,
+      comment: 'The boolean value of the state being stored (e.g., 1 or 0).'
     },
     floatValue: {
       type: DataTypes.FLOAT,
       comment: 'The float value of the state being stored (e.g., 5, -1.234, 1000000).'
+    },
+    stringValue: {
+      type: DataTypes.STRING,
+      comment: 'The string value of the state being stored (e.g., outtsbutte, finalGirl).'
     },
     jsonValue: {
       type: DataTypes.JSON,
