@@ -31,29 +31,25 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
 
   async run (msg, { step }) {
     if (step === 'intro') {
-      return this.runMessageIntro(msg)
+      return this.runBeginIntro(msg)
     }
 
     if (step === 'anew') {
-      // @todo display docking info.
-      // @todo define state and current location.
-      return msg.reply('docking here')
+      return this.runBeginAnew(msg)
     }
   }
 
   /**
    * If unseen, display the intro message for new players.
    */
-  async runMessageIntro (msg) {
+  async runBeginIntro (msg) {
     const [, created] = await this.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
         guildId: msg.guild.id,
         type: 'messagesSeen',
         subtype: 'begin',
-        subsubtype: 'intro'
-      },
-      defaults: {
+        subsubtype: 'intro',
         booleanValue: 1
       }
     })
@@ -63,10 +59,10 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
       return null
     }
 
-    return msg.replyEmbed(new Discord.MessageEmbed()
+    return msg.embed(new Discord.MessageEmbed()
       .setColor('#ff0000')
       .setTitle('30 years')
-      .setAuthor('Land of Idle Demons')
+      .setAuthor('Land of Idle Demons', msg.author.avatarURL())
       .setThumbnail('https://github.com/morbus/loidbot/raw/main/assets/icons/pyromaniac--square.png')
       .setDescription(stripIndents`
         ${oneLine`
@@ -94,5 +90,41 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
         `}
       `)
     )
+  }
+
+  /**
+   * If unseen, display the anew beginning for new players.
+   */
+  async runBeginAnew (msg) {
+    const [, created] = await this.guildMemberState.findOrCreate({
+      where: {
+        userId: msg.author.id,
+        guildId: msg.guild.id,
+        type: 'messagesSeen',
+        subtype: 'begin',
+        subsubtype: 'anew',
+        booleanValue: 1
+      }
+    })
+
+    // Message has already been seen.
+    if (created === false) {
+      return null
+    }
+
+    /*
+You dock your father's boat at the first opportunity. You and the rest of your
+family were floaters, those who hid from the demons by sailing out to sea. You
+didn't plan for the multi-headed sharks, giant squids, krakens, sirens, sea serpents,
+evil mermaids, and other such, but you made do. Or, well, *you* did, at least. Your
+parents not so much.
+
+"Outt's Butte" reads the sign above the dock. In the distance, a giant hill
+protrudes from the land, apparently Outt's giant middle finger to all. The
+small fishing village appears empty, and no one greets you except for the
+mosquitos. The small normal-sized ones. A blessing.
+
+*To continue, type `':kill'`*.
+ */
   }
 }

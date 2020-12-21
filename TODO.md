@@ -41,5 +41,10 @@
 
 ## Commands
   * "begin" user creation and intro.
+  * "begin" should suggest kill or status if reentered.  
   * Mobs JSON and "attack" command.
   * word of the day can use client.on() inside command constructor.
+  * Instead of replyEmbed, should we use embed with "Morbus Iff's LOID" and avatar?
+
+## Other
+  * Angry? Amber? Arctic? Ice?
