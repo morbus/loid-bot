@@ -11,9 +11,6 @@ const LoidBotRegistry = require('../../core/lib/Registry')
 const Sequelize = require('sequelize')
 const winston = require('winston')
 
-// @todo I can't figure out any other way to make this work.
-const CommandDispatcher = require('../../node_modules/discord.js-commando/src/dispatcher')
-
 module.exports = class LoidBotClient extends CommandoClient {
   /**
    * @inheritDoc
@@ -49,6 +46,6 @@ module.exports = class LoidBotClient extends CommandoClient {
      * @type {LoidBotRegistry}
      */
     this.registry = new LoidBotRegistry(this)
-    this.dispatcher = new CommandDispatcher(this, this.registry)
+    this.dispatcher.registry = this.registry
   }
 }
