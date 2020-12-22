@@ -7,6 +7,8 @@
 'use strict'
 const { BOT_DATABASE_DSN } = process.env
 const { CommandoClient } = require('discord.js-commando')
+// @todo @see https://github.com/discordjs/Commando/issues/348
+const CommandDispatcher = require('../../node_modules/discord.js-commando/src/dispatcher')
 const LoidBotRegistry = require('../../core/lib/Registry')
 const Sequelize = require('sequelize')
 const winston = require('winston')
@@ -46,6 +48,6 @@ module.exports = class LoidBotClient extends CommandoClient {
      * @type {LoidBotRegistry}
      */
     this.registry = new LoidBotRegistry(this)
-    this.dispatcher.registry = this.registry
+    this.dispatcher = new CommandDispatcher(this, this.registry)
   }
 }
