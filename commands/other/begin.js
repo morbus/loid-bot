@@ -43,7 +43,7 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
    * If unseen, display the intro message for new players.
    */
   async runBeginIntro (msg) {
-    const [, created] = await this.guildMemberState.findOrCreate({
+    const [, created] = await this.db.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
         guildId: msg.guild.id,
@@ -96,7 +96,7 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
    * If unseen, display the anew beginning for new players.
    */
   async runBeginAnew (msg) {
-    const [, created] = await this.guildMemberState.findOrCreate({
+    const [, created] = await this.db.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
         guildId: msg.guild.id,

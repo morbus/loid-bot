@@ -55,5 +55,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       comment: 'The JSON value of the state being stored (e.g. {"complex": "values", "are": "here"}).'
     }
+  },
+  {
+    freezeTableName: true
   })
 }
