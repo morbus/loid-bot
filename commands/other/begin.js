@@ -5,7 +5,7 @@
 
 'use strict'
 const Discord = require('discord.js')
-const LoidBotCommand = require('../../lib/Command')
+const LoidBotCommand = require('../../core/lib/Command')
 const { oneLine, stripIndents } = require('common-tags')
 
 module.exports = class LoidBotBeginCommand extends LoidBotCommand {

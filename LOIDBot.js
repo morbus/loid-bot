@@ -9,7 +9,7 @@
 'use strict'
 require('dotenv').config()
 const { BOT_COMMAND_PREFIX, BOT_OWNER_USERID, BOT_TOKEN } = process.env
-const LoidBotCommandoClient = require('./lib/Client')
+const LoidBotCommandoClient = require('./core/lib/Client')
 const path = require('path')
 
 const client = new LoidBotCommandoClient({
