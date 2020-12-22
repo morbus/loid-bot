@@ -1,22 +1,29 @@
 
 /**
- * Provides a CommandoClient class with logging and other initialized extras.
+ * Discord.js Client with Commando and LOID functionality.
+ * @extends {CommandoClient}
  */
 
 'use strict'
 const { BOT_DATABASE_DSN } = process.env
 const { CommandoClient } = require('discord.js-commando')
+const LoidBotRegistry = require('../../core/lib/Registry')
 const Sequelize = require('sequelize')
-const glob = require('glob')
-const path = require('path')
 const winston = require('winston')
 
+// @todo I can't figure out any other way to make this work.
+const CommandDispatcher = require('../../node_modules/discord.js-commando/src/dispatcher')
+
 module.exports = class LoidBotClient extends CommandoClient {
+  /**
+   * @inheritDoc
+   */
   constructor (options) {
     super(options)
 
     /**
      * Logging support with Winston.
+     * @type {Logger}
      */
     this.logger = winston.createLogger({
       transports: [
@@ -31,24 +38,17 @@ module.exports = class LoidBotClient extends CommandoClient {
 
     /**
      * Database and ORM support with Sequelize.
+     * @type {Sequelize}
      */
     this.sequelize = new Sequelize(BOT_DATABASE_DSN, {
       logging: this.logger.verbose.bind(this.logger)
     })
-  }
 
-  /**
-   * Load all database models. Files must export a Sequelize database Model.
-   * @param {null|Array} globPatterns - An array of patterns to glob against.
-   * @return {Promise}
-   */
-  loadDatabaseModelsIn (globPatterns) {
-    for (const globPattern of globPatterns) {
-      for (const filepath of glob.sync(globPattern)) {
-        require(path.join(process.cwd(), filepath))(this.sequelize, Sequelize.DataTypes)
-      }
-    }
-
-    this.sequelize.sync()
+    /**
+     * LOID's replacement {CommandoRegistry}.
+     * @type {LoidBotRegistry}
+     */
+    this.registry = new LoidBotRegistry(this)
+    this.dispatcher = new CommandDispatcher(this, this.registry)
   }
 }

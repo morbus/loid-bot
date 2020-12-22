@@ -9,20 +9,20 @@
 'use strict'
 require('dotenv').config()
 const { BOT_COMMAND_PREFIX, BOT_OWNER_USERID, BOT_TOKEN } = process.env
-const LoidBotCommandoClient = require('./core/lib/Client')
+const LoidBotClient = require('./core/lib/Client')
 const path = require('path')
 
-const client = new LoidBotCommandoClient({
+const client = new LoidBotClient({
   owner: BOT_OWNER_USERID,
   commandPrefix: BOT_COMMAND_PREFIX
 })
 
-client.loadDatabaseModelsIn([
-  'core/**/models/**/*.js',
-  'igms/**/models/**/*.js'
-])
-
 client.registry
+  .loadDatabaseModelsIn([
+    'core/**/models/**/*.js',
+    'igms/**/models/**/*.js'
+  ])
+
   // Commando built-ins.
   .registerDefaultTypes()
   .registerDefaultGroups()

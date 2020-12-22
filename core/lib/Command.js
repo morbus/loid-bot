@@ -11,17 +11,19 @@ module.exports = class LoidBotCommand extends Command {
     super(client, info)
 
     /**
-     * Support this.logger.info() instead of this.client.logger.info().
+     * Logging support with Winston.
+     * @type {Logger}
      */
     Object.defineProperty(this, 'logger', { value: client.logger })
 
     /**
-     * Support this.sequelize instead of this.client.sequelize.
+     * Database and ORM support with Sequelize.
+     * @type {Sequelize}
      */
     Object.defineProperty(this, 'sequelize', { value: client.sequelize })
 
     /**
-     * Support this.database.MODEL instead of this.client.sequelize.models.MODEL.
+     * Defined database models with Sequelize.
      */
     Object.defineProperty(this, 'database', { value: client.sequelize.models })
   }
