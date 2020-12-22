@@ -5,10 +5,10 @@
 
 'use strict'
 const Discord = require('discord.js')
-const LoidBotCommandoCommand = require('../../lib/Command')
+const LoidBotCommand = require('../../lib/Command')
 const { oneLine, stripIndents } = require('common-tags')
 
-module.exports = class BeginCommand extends LoidBotCommandoCommand {
+module.exports = class LoidBotBeginCommand extends LoidBotCommand {
   constructor (client) {
     super(client, {
       name: 'begin',
@@ -43,7 +43,7 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
    * If unseen, display the intro message for new players.
    */
   async runBeginIntro (msg) {
-    const [, created] = await this.db.guildMemberState.findOrCreate({
+    const [, created] = await this.database.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
         guildId: msg.guild.id,
@@ -96,7 +96,7 @@ module.exports = class BeginCommand extends LoidBotCommandoCommand {
    * If unseen, display the anew beginning for new players.
    */
   async runBeginAnew (msg) {
-    const [, created] = await this.db.guildMemberState.findOrCreate({
+    const [, created] = await this.database.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
         guildId: msg.guild.id,

@@ -17,6 +17,11 @@ const client = new LoidBotCommandoClient({
   commandPrefix: BOT_COMMAND_PREFIX
 })
 
+client.loadDatabaseModelsIn([
+  'core/**/models/**/*.js',
+  'igms/**/models/**/*.js'
+])
+
 client.registry
   // Commando built-ins.
   .registerDefaultTypes()
