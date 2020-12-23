@@ -43,6 +43,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
    * If unseen, display the intro message for new players.
    */
   async runBeginIntro (msg) {
+    const prefix = msg.guild.commandPrefix || this.client.commandPrefix
     const [, created] = await this.database.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
@@ -54,12 +55,12 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
       }
     })
 
-    // Message has already been seen.
+    // Message previously seen.
     if (created === false) {
-      return null
+      return msg.reply(`*you‘ve already begun. Try \`${prefix} begin anew\`.*`)
     }
 
-    return msg.embed(new Discord.MessageEmbed()
+    return msg.replyEmbed(new Discord.MessageEmbed()
       .setColor('#ff0000')
       .setTitle('30 years')
       .setAuthor('Land of Idle Demons', msg.author.avatarURL())
@@ -71,22 +72,22 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
           twin, tortured mutant, crazy despot, giant lizard, sleeping cosmic,
           and more, all at once. Their coordinated attack on humanity was
           more than we could handle. We fell and fell hard, dying by the
-          billions. So utter and complete was the demons' victory that many
+          billions. So utter and complete was the demons‘ victory that many
           years passed without a legitimate challenge to their dominance.
         `}
 
         ${oneLine`
-          The demons have since fallen idle, complacent and utterly bored with
-          their prize, languishing in their possessed bodies. They barely
+          The demons have since fallen idle, complacent and bored with their
+          planetary prize, languishing in their possessed bodies. They barely
           lift a finger to scratch themselves, much less squash rebellion.
         `}
 
         ${oneLine`
-          If you fight back, you know you'll win. It's only a matter of time.
+          If you fight back, you know you‘ll win. It‘s only a matter of time.
         `}
 
         ${oneLine`
-          *To continue, type \`${msg.guild.commandPrefix || this.client.commandPrefix} begin anew.\`*
+          *To continue, type \`${prefix} begin anew\`.*
         `}
       `)
     )
@@ -96,6 +97,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
    * If unseen, display the anew beginning for new players.
    */
   async runBeginAnew (msg) {
+    const prefix = msg.guild.commandPrefix || this.client.commandPrefix
     const [, created] = await this.database.guildMemberState.findOrCreate({
       where: {
         userId: msg.author.id,
@@ -107,24 +109,49 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
       }
     })
 
-    // Message has already been seen.
+    // Message previously seen.
     if (created === false) {
-      return null
+      return msg.reply(`*you‘ve already begun. Try \`${prefix} status\` or \`${prefix} timers\`.*`)
     }
 
-    /*
-You dock your father's boat at the first opportunity. You and the rest of your
-family were floaters, those who hid from the demons by sailing out to sea. You
-didn't plan for the multi-headed sharks, giant squids, krakens, sirens, sea serpents,
-evil mermaids, and other such, but you made do. Or, well, *you* did, at least. Your
-parents not so much.
+    // Welcome to your first location!
+    await this.database.guildMemberState.findOrCreate({
+      where: {
+        userId: msg.author.id,
+        guildId: msg.guild.id,
+        type: 'currentLocation',
+        stringValue: 'outtsButte'
+      }
+    })
 
-"Outt's Butte" reads the sign above the dock. In the distance, a giant hill
-protrudes from the land, apparently Outt's giant middle finger to all. The
-small fishing village appears empty, and no one greets you except for the
-mosquitos. The small normal-sized ones. A blessing.
+    // "It goes Inns your Mouth and Outt's your Butte!"
+    return msg.replyEmbed(new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setTitle('Docking at Outt‘s Butte')
+      .setAuthor('Land of Idle Demons', msg.author.avatarURL())
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/assets/icons/monument-valley--square.png')
+      .setDescription(stripIndents`
+        ${oneLine`
+          You dock your father‘s boat at the first opportunity. You and the
+          rest of your family were “floaters”, those who hid from the demons
+          by sailing out to sea. You didn‘t plan for the multi-headed sharks,
+          giant squids, krakens, sirens, sea serpents, evil mermaids, and
+          other such, but you made do. Or, well, *you* did, at least. Your
+          parents not so much.
+        `}
 
-*To continue, type `':kill'`*.
- */
+        ${oneLine`
+          “Outt‘s Butte” reads the sign above the dock. In the distance, a
+          giant hill protrudes from the land, apparently Outt‘s giant middle
+          finger to all. The small fishing village appears empty, and no one
+          greets you except for the mosquitoes. The small normal-sized ones.
+          A blessing.
+        `}
+
+        ${oneLine`
+          *To continue, type \`${prefix} kill 1 mosquito\`.*
+        `}
+      `)
+    )
   }
 }
