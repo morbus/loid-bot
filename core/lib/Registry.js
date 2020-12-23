@@ -31,14 +31,62 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
   }
 
   /**
-   * Load all database models. Files must export a Sequelize database Model.
-   * @param {null|Array} globPatterns - An array of patterns to glob against.
+   * Register addons in the core and user spaces.
+   *
+   * An addon directory can look like the following:
+   *   addonName/commandName.js
+   *   addonName/commandNameAlso.js
+   *   addonName/assets/icons/someImage.png
+   *   addonName/assets/json/someData.json
+   *   addonName/models/tableName.js
+   *   addonName/types/typeName.js
+   *
+   * @param {Array} directories - An array of directories to search through.
    * @return {LoidBotRegistry}
    */
-  loadDatabaseModelsIn (globPatterns) {
-    for (const globPattern of globPatterns) {
-      for (const filepath of glob.sync(globPattern)) {
-        require(path.join(process.cwd(), filepath))(this.sequelize, Sequelize.DataTypes)
+  registerAddonsIn (directories) {
+    const addonTypes = [
+      {
+        type: 'model',
+        pattern: '/**/models/**/*.js'
+      },
+      {
+        type: 'type',
+        pattern: '/**/types/**/*.js'
+      },
+      {
+        type: 'file',
+        pattern: '/**/*.js',
+        options: {
+          ignore: [
+            '/**/models/**/*',
+            '/**/types/**/*'
+          ]
+        }
+      }
+    ]
+
+    for (const directory of directories) {
+      for (const addonType of addonTypes) {
+        const options = addonType.options || {}
+        const pattern = path.join(directory, addonType.pattern)
+        this.logger.debug(`Looking for addon ${addonType.type}s in ${pattern}.`)
+
+        for (const filepath of glob.sync(pattern, options)) {
+          this.logger.info(`Loading addon ${addonType.type} in ${filepath}.`)
+
+          if (addonType.type === 'model') {
+            require(filepath)(this.sequelize, Sequelize.DataTypes)
+          }
+
+          if (addonType.type === 'type') {
+            this.registerType(require(filepath))
+          }
+
+          if (addonType.type === 'file') {
+            this.registerCommand(require(filepath))
+          }
+        }
       }
     }
 

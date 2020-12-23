@@ -48,6 +48,11 @@ module.exports = class LoidBotClient extends CommandoClient {
      * @type {LoidBotRegistry}
      */
     this.registry = new LoidBotRegistry(this)
+
+    /**
+     * The command dispatcher with our replacement registry.
+     * @type {CommandDispatcher}
+     */
     this.dispatcher = new CommandDispatcher(this, this.registry)
   }
 }

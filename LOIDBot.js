@@ -18,11 +18,6 @@ const client = new LoidBotClient({
 })
 
 client.registry
-  .loadDatabaseModelsIn([
-    'core/**/models/**/*.js',
-    'igms/**/models/**/*.js'
-  ])
-
   // Commando built-ins.
   .registerDefaultTypes()
   .registerDefaultGroups()
@@ -30,14 +25,17 @@ client.registry
     prefix: false
   })
 
-  // LOID customs.
+  // LOID custom groups.
   .registerGroups([
     ['incrementals', 'Incrementals'],
     ['other', 'Other']
   ])
 
-  // Register all commands in the ./commands/ directory.
-  .registerCommandsIn(path.join(__dirname, 'commands'))
+  // LOID addons support.
+  .registerAddonsIn([
+    path.join(__dirname, 'core/addons'),
+    path.join(__dirname, 'addons')
+  ])
 
 client.login(BOT_TOKEN)
 
