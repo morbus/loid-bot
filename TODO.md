@@ -10,12 +10,12 @@
     parsing and that's not working with our Plugin support.
   * Load userspace addons first and prevent core erroring/overriding?
 
-## Commands
+## Addons
   * "begin" user creation and intro.
   * "begin" should suggest kill or status if reentered.  
   * Mobs JSON and "attack" command.
   * word of the day can use client.on() inside command constructor.
-  * Move begin assets into begin directory.
+  * Add addons directory with README placeholder.
 
 ## Other
   * Angry? Amber? Arctic? Ice?

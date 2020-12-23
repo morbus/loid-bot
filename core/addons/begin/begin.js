@@ -63,7 +63,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
       .setColor('#ff0000')
       .setTitle('30 years')
       .setAuthor('Land of Idle Demons', msg.author.avatarURL())
-      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/assets/icons/pyromaniac--square.png')
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/assets/icons/pyromaniac--square.png')
       .setDescription(stripIndents`
         ${oneLine`
           30 years it has been since the demons won. 30 years since the demons
