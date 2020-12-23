@@ -142,7 +142,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
 
         ${oneLine`
           “Outt‘s Butte” reads the sign above the dock. In the distance, a
-          giant hill protrudes from the land, apparently Outt‘s giant middle
+          giant hill protrudes from the land, presumably Outt‘s giant middle
           finger to all. The small fishing village appears empty, and no one
           greets you except for the mosquitoes. The small normal-sized ones.
           A blessing.
