@@ -86,7 +86,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
         `}
 
         ${oneLine`
-          *To continue, type \`${msg.guild.commandPrefix || this.client.commandPrefix}begin anew.\`*
+          *To continue, type \`${msg.guild.commandPrefix || this.client.commandPrefix} begin anew.\`*
         `}
       `)
     )

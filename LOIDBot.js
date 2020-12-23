@@ -25,16 +25,16 @@ client.registry
     prefix: false
   })
 
-  // LOID custom groups.
+  // LOID groups.
   .registerGroups([
     ['incrementals', 'Incrementals'],
     ['other', 'Other']
   ])
 
-  // LOID addons support.
+  // LOID addons.
   .registerAddonsIn([
-    path.join(__dirname, 'core/addons'),
-    path.join(__dirname, 'addons')
+    path.join(__dirname, 'addons'),
+    path.join(__dirname, 'core/addons')
   ])
 
 client.login(BOT_TOKEN)
@@ -46,7 +46,7 @@ client.once('ready', () => {
     status: 'idle',
     activity: {
       type: 'WATCHING',
-      name: 'for ::begin'
+      name: `for "${client.commandPrefix} begin"`
     }
   })
 })
