@@ -56,7 +56,7 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
         pattern: '/**/types/**/*.js'
       },
       {
-        type: 'file',
+        type: 'listener',
         pattern: '/**/*.js',
         options: {
           ignore: [
@@ -84,7 +84,7 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
             this.registerType(require(filepath))
           }
 
-          if (addonType.type === 'file') {
+          if (addonType.type === 'listener') {
             this.registerCommand(require(filepath))
           }
         }

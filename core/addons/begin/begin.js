@@ -129,7 +129,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
       .setColor('#ff0000')
       .setTitle('Docking at Outt‘s Butte')
       .setAuthor('Land of Idle Demons', msg.author.avatarURL())
-      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/outts-butte--monument-valley.png')
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/explore/images/outts-butte--monument-valley.png')
       .setDescription(stripIndents`
         ${oneLine`
           You dock your father‘s boat at the first opportunity. You and the
