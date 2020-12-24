@@ -33,8 +33,8 @@ client.registry
 
   // LOID addons.
   .registerAddonsIn([
-    path.join(__dirname, 'addons'),
-    path.join(__dirname, 'core/addons')
+    path.join(__dirname, 'core/addons'),
+    path.join(__dirname, 'addons')
   ])
 
 client.login(BOT_TOKEN)

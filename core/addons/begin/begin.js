@@ -64,7 +64,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
       .setColor('#ff0000')
       .setTitle('30 years')
       .setAuthor('Land of Idle Demons', msg.author.avatarURL())
-      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/assets/icons/pyromaniac--square.png')
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/begin--pyromaniac.png')
       .setDescription(stripIndents`
         ${oneLine`
           30 years it has been since the demons won. 30 years since the demons
@@ -129,7 +129,7 @@ module.exports = class LoidBotBeginCommand extends LoidBotCommand {
       .setColor('#ff0000')
       .setTitle('Docking at Outt‘s Butte')
       .setAuthor('Land of Idle Demons', msg.author.avatarURL())
-      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/assets/icons/monument-valley--square.png')
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/outts-butte--monument-valley.png')
       .setDescription(stripIndents`
         ${oneLine`
           You dock your father‘s boat at the first opportunity. You and the

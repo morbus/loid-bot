@@ -17,6 +17,10 @@
   * Mobs JSON and "kill" command.
   * word of the day can use client.on() inside command constructor.
   * Add addons directory with README placeholder.
+  * Add /addons to .gitignore after adding README.
+  * "status" command to list high-level guild member stats.
+  * "timers" command to list a guild member's timers (most recent 5?)
+  * "locations.json" to describe more about the location?
 
 ## Other
   * Angry? Amber? Arctic? Ice?

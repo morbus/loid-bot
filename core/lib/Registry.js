@@ -36,8 +36,9 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
    * An addon directory can look like the following:
    *   addonName/commandName.js
    *   addonName/commandNameAlso.js
-   *   addonName/assets/icons/someImage.png
-   *   addonName/assets/json/someData.json
+   *   addonName/assets/images/someImage.png
+   *   addonName/assets/locations/locationName.png
+   *   addonName/assets/mobs/mobName.json
    *   addonName/models/tableName.js
    *   addonName/types/typeName.js
    *
