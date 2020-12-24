@@ -17,6 +17,7 @@
   * Create a new argument type called "mob" that checks against loaded JSON?
   * Use Luxon for time handling with its DateTime.plus support?
   * Our various registerAddon* functions should support excludes.
+  * How does Commando handle Command aliases? We want the same for our stuff.
 
 ## Addons
   * Mobs JSON and "kill" command.

@@ -19,6 +19,12 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
     super(client)
 
     /**
+     * Registered locations, mapped by their name.
+     * @type {Collection<string, Object>}
+     */
+    this.locations = new discord.Collection()
+
+    /**
      * Logging support with Winston.
      * @type {Logger}
      */
@@ -33,23 +39,15 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
 
   /**
    * Register all addon files in the passed directories.
-   *
-   * An addon directory can look like the following:
-   *   addonName/commandName.js
-   *   addonName/commandNameAlso.js
-   *   addonName/assets/images/someImage.png
-   *   addonName/assets/locations/locationName.png
-   *   addonName/assets/mobs/mobName.json
-   *   addonName/models/tableName.js
-   *   addonName/types/typeName.js
-   *
    * @param {Array} directories - An array of directories to search through.
    * @return {LoidBotRegistry}
    */
   registerAddonsIn (directories) {
+    this.registerAddonListenersIn(directories)
+    this.registerAddonLocationsIn(directories)
     this.registerAddonModelsIn(directories)
     this.registerAddonTypesIn(directories)
-    this.registerAddonListenersIn(directories)
+
     return this
   }
 
@@ -65,8 +63,28 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
       this.logger.debug(`Looking for addon listeners in ${pattern}.`)
 
       for (const filepath of glob.sync(pattern, options)) {
-        this.logger.info(`Loading addon listener in ${filepath}.`)
         this.registerCommand(require(filepath))
+        this.logger.info(`Loaded addon listener in ${filepath}.`)
+      }
+    }
+
+    return this
+  }
+
+  /**
+   * Register addon locations in the passed directories.
+   * @param {Array} directories - An array of directories to search through.
+   * @return {LoidBotRegistry}
+   */
+  registerAddonLocationsIn (directories) {
+    for (const directory of directories) {
+      const pattern = path.join(directory, '/**/locations/**/*.json')
+      this.logger.debug(`Looking for addon locations in ${pattern}.`)
+
+      for (const filepath of glob.sync(pattern)) {
+        const location = require(filepath)
+        this.locations.set(location.name, location)
+        this.logger.info(`Loaded addon location in ${filepath}.`)
       }
     }
 
@@ -84,8 +102,8 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
       this.logger.debug(`Looking for addon models in ${pattern}.`)
 
       for (const filepath of glob.sync(pattern)) {
-        this.logger.info(`Loading addon model in ${filepath}.`)
         require(filepath)(this.sequelize, Sequelize.DataTypes)
+        this.logger.info(`Loaded addon model in ${filepath}.`)
       }
     }
 
@@ -104,8 +122,8 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
       this.logger.debug(`Looking for addon types in ${pattern}.`)
 
       for (const filepath of glob.sync(pattern)) {
-        this.logger.info(`Loading addon type in ${filepath}.`)
         this.registerType(require(filepath))
+        this.logger.info(`Loaded addon type in ${filepath}.`)
       }
     }
 
