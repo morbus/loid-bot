@@ -7,6 +7,7 @@
 'use strict'
 const { CommandoRegistry } = require('discord.js-commando')
 const Sequelize = require('sequelize')
+const discord = require('discord.js')
 const glob = require('glob')
 const path = require('path')
 
@@ -31,7 +32,7 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
   }
 
   /**
-   * Register addons in the core and user spaces.
+   * Register all addon files in the passed directories.
    *
    * An addon directory can look like the following:
    *   addonName/commandName.js
@@ -46,52 +47,68 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
    * @return {LoidBotRegistry}
    */
   registerAddonsIn (directories) {
-    const addonTypes = [
-      {
-        type: 'model',
-        pattern: '/**/models/**/*.js'
-      },
-      {
-        type: 'type',
-        pattern: '/**/types/**/*.js'
-      },
-      {
-        type: 'listener',
-        pattern: '/**/*.js',
-        options: {
-          ignore: [
-            '/**/models/**/*',
-            '/**/types/**/*'
-          ]
-        }
-      }
-    ]
+    this.registerAddonModelsIn(directories)
+    this.registerAddonTypesIn(directories)
+    this.registerAddonListenersIn(directories)
+    return this
+  }
 
+  /**
+   * Register addon listeners in the passed directories.
+   * @param {Array} directories - An array of directories to search through.
+   * @return {LoidBotRegistry}
+   */
+  registerAddonListenersIn (directories) {
     for (const directory of directories) {
-      for (const addonType of addonTypes) {
-        const options = addonType.options || {}
-        const pattern = path.join(directory, addonType.pattern)
-        this.logger.debug(`Looking for addon ${addonType.type}s in ${pattern}.`)
+      const pattern = path.join(directory, '/**/*.js')
+      const options = { ignore: ['/**/models/**/*', '/**/types/**/*'] }
+      this.logger.debug(`Looking for addon listeners in ${pattern}.`)
 
-        for (const filepath of glob.sync(pattern, options)) {
-          this.logger.info(`Loading addon ${addonType.type} in ${filepath}.`)
+      for (const filepath of glob.sync(pattern, options)) {
+        this.logger.info(`Loading addon listener in ${filepath}.`)
+        this.registerCommand(require(filepath))
+      }
+    }
 
-          if (addonType.type === 'model') {
-            require(filepath)(this.sequelize, Sequelize.DataTypes)
-          }
+    return this
+  }
 
-          if (addonType.type === 'type') {
-            this.registerType(require(filepath))
-          }
+  /**
+   * Register addon database models in the passed directories.
+   * @param {Array} directories - An array of directories to search through.
+   * @return {LoidBotRegistry}
+   */
+  registerAddonModelsIn (directories) {
+    for (const directory of directories) {
+      const pattern = path.join(directory, '/**/models/**/*.js')
+      this.logger.debug(`Looking for addon models in ${pattern}.`)
 
-          if (addonType.type === 'listener') {
-            this.registerCommand(require(filepath))
-          }
-        }
+      for (const filepath of glob.sync(pattern)) {
+        this.logger.info(`Loading addon model in ${filepath}.`)
+        require(filepath)(this.sequelize, Sequelize.DataTypes)
       }
     }
 
     this.sequelize.sync()
+    return this
+  }
+
+  /**
+   * Register addon argument types in the passed directories.
+   * @param {Array} directories - An array of directories to search through.
+   * @return {LoidBotRegistry}
+   */
+  registerAddonTypesIn (directories) {
+    for (const directory of directories) {
+      const pattern = path.join(directory, '/**/types/**/*.js')
+      this.logger.debug(`Looking for addon types in ${pattern}.`)
+
+      for (const filepath of glob.sync(pattern)) {
+        this.logger.info(`Loading addon type in ${filepath}.`)
+        this.registerType(require(filepath))
+      }
+    }
+
     return this
   }
 }

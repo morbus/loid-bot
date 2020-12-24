@@ -17,17 +17,19 @@ const client = new LoidBotClient({
   commandPrefix: BOT_COMMAND_PREFIX
 })
 
+client.on('error', message => client.logger.error(message))
+client.on('warn', message => client.logger.warn(message))
+client.on('debug', message => client.logger.debug(message))
+
 client.registry
   // Commando built-ins.
   .registerDefaultTypes()
-  .registerDefaultGroups()
-  .registerDefaultCommands({
-    prefix: false
-  })
+  // .registerDefaultGroups()
+  // .registerDefaultCommands({ prefix: false })
 
   // LOID groups.
   .registerGroups([
-    ['incrementals', 'Incrementals'],
+    ['actions', 'Actions'],
     ['other', 'Other']
   ])
 
@@ -50,8 +52,3 @@ client.once('ready', () => {
     }
   })
 })
-
-client.on('error', message => client.logger.error(message))
-client.on('warn', message => client.logger.warn(message))
-client.on('debug', message => client.logger.debug(message))
-process.on('uncaughtException', message => client.logger.error(message))
