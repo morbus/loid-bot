@@ -12,6 +12,7 @@
   * Create indexes for (*) + type, subtype, subsubtype?
   * Load userspace addons first and prevent core erroring/overriding?
   * Make sure smart quotes are being used in strings.
+  * Create a new argument type called "mob" that checks against loaded JSON? 
 
 ## Addons
   * Mobs JSON and "kill" command.
