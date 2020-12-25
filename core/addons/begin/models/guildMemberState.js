@@ -57,6 +57,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
   {
-    freezeTableName: true
+    freezeTableName: true,
+    indexes: [
+      {
+        name: 'booleanValuesIndex',
+        fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype', 'booleanValue']
+      },
+      {
+        name: 'floatValuesIndex',
+        fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype', 'floatValue']
+      },
+      {
+        name: 'stringValuesIndex',
+        fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype', 'stringValue']
+      }
+    ]
   })
 }

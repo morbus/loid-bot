@@ -42,5 +42,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       comment: 'The milestone or reason that earned the reduction (e.g., 10, 100, "Played on April 1st, 2021.").'
     }
+  },
+  {
+    indexes: [
+      {
+        name: 'reductionsIndex',
+        fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype']
+      }
+    ]
   })
 }
