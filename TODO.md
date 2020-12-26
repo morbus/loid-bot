@@ -21,6 +21,8 @@
   * We need similar duplicate handling as Types/Commands in Commando.
     * Or, do we? Will custom stuff just override core stuff?
     * But, what about custom stuff having duplicates? Sticky.
+  * If Commando is "dead", and we need to override various things to support
+    our concept of Addons, if and when should we decide on just rolling our own?
 
 ## Addons
   * Mobs JSON and "kill" command.

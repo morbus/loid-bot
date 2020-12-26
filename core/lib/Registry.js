@@ -4,7 +4,7 @@
  * @extends {CommandoRegistry}
  */
 
-'use strict'
+'use strict'?
 const { CommandoRegistry } = require('discord.js-commando')
 const Sequelize = require('sequelize')
 const discord = require('discord.js')
@@ -23,6 +23,12 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
      * @type {Collection<string, Object>}
      */
     this.locations = new discord.Collection()
+
+    /**
+     * Registered mobs, mapped by their name.
+     * @type {Collection<string, Object>}
+     */
+    this.mobs = new discord.Collection()
 
     /**
      * Logging support with Winston.
@@ -45,9 +51,9 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
   registerAddonsIn (directories) {
     this.registerAddonListenersIn(directories)
     this.registerAddonLocationsIn(directories)
+    this.registerAddonMobsIn(directories)
     this.registerAddonModelsIn(directories)
     this.registerAddonTypesIn(directories)
-
     return this
   }
 
@@ -64,7 +70,7 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
 
       for (const filepath of glob.sync(pattern, options)) {
         this.registerCommand(require(filepath))
-        this.logger.info(`Loaded addon listener in ${filepath}.`)
+        this.logger.info(`Registered addon listener ${filepath}.`)
       }
     }
 
@@ -84,7 +90,27 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
       for (const filepath of glob.sync(pattern)) {
         const location = require(filepath)
         this.locations.set(location.name, location)
-        this.logger.info(`Loaded addon location in ${filepath}.`)
+        this.logger.info(`Registered addon location ${filepath}.`)
+      }
+    }
+
+    return this
+  }
+
+  /**
+   * Register addon mobs in the passed directories.
+   * @param {Array} directories - An array of directories to search through.
+   * @return {LoidBotRegistry}
+   */
+  registerAddonMobsIn (directories) {
+    for (const directory of directories) {
+      const pattern = path.join(directory, '/**/mobs/**/*.json')
+      this.logger.debug(`Looking for addon mobs in ${pattern}.`)
+
+      for (const filepath of glob.sync(pattern)) {
+        const mob = require(filepath)
+        this.mobs.set(mob.name, mob)
+        this.logger.info(`Registered addon mob ${filepath}.`)
       }
     }
 
@@ -101,9 +127,12 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
       const pattern = path.join(directory, '/**/models/**/*.js')
       this.logger.debug(`Looking for addon models in ${pattern}.`)
 
+      // We don't register these models like other addon files because
+      // Sequelize already does that in its class (sequelize.models). We make
+      // that accessible via (client).sequelize.models or (command).database.
       for (const filepath of glob.sync(pattern)) {
         require(filepath)(this.sequelize, Sequelize.DataTypes)
-        this.logger.info(`Loaded addon model in ${filepath}.`)
+        this.logger.info(`Registered addon model ${filepath}.`)
       }
     }
 
@@ -123,7 +152,7 @@ module.exports = class LoidBotRegistry extends CommandoRegistry {
 
       for (const filepath of glob.sync(pattern)) {
         this.registerType(require(filepath))
-        this.logger.info(`Loaded addon type in ${filepath}.`)
+        this.logger.info(`Registered addon type ${filepath}.`)
       }
     }
 
