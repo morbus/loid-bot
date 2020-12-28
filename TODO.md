@@ -11,7 +11,6 @@
 ## General
   * Add game-icons copyright note to the README.
   * Write the README and some design notes.
-  * Make sure smart quotes are being used in strings.
   * Create a new argument type called "mob" that checks against loaded JSON?
   * Use Luxon for time handling with its DateTime.plus support?
   * Our various registerAddon* functions should support excludes.
