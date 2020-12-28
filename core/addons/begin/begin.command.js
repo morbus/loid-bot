@@ -11,7 +11,7 @@ const Discord = require('discord.js')
 
 class BeginCommand extends Command {
   constructor () {
-    super('core-command:begin', {
+    super('begin', {
       aliases: ['begin'],
       channel: 'guild',
       description: 'Begin your recovery of the Land of Idle Demons.',
@@ -96,6 +96,7 @@ class BeginCommand extends Command {
    * Display the anew beginning for new players.
    */
   async runBeginAnew (message) {
+    const outtsButteLocation = this.client.locationHandler.modules.get('outtsButte')
     const guildMemberState = this.client.sequelize.models.guildMemberState
     const [, created] = await guildMemberState.findOrCreate({
       where: {
@@ -128,7 +129,7 @@ class BeginCommand extends Command {
       .setColor('#ff0000')
       .setTitle('Docking at Outt\'s Butte')
       .setAuthor('Land of Idle Demons', message.author.avatarURL())
-      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/explore/images/outts-butte--monument-valley.png')
+      .setThumbnail(outtsButteLocation.imageUrl)
       .setDescription(stripIndents`
         ${oneLine`
           You dock your father's boat at the first opportunity. You and the

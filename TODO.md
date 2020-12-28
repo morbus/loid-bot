@@ -1,13 +1,6 @@
 
 # TODO
 
-## Bugs
-  * "loid begin" fails with "TypeError: The "path" argument must be of
-    type string. Received null" because Registry defaults to path-based
-    parsing and that's not working with our Plugin support. For now, we've
-    disabled all Commando's default commands. We can re-evaluate supporting
-    dynamic reloading when the bot gets a little more production-y.
-
 ## General
   * Add game-icons copyright note to the README.
   * Write the README and some design notes.
@@ -20,8 +13,8 @@
   * We need similar duplicate handling as Types/Commands in Commando.
     * Or, do we? Will custom stuff just override core stuff?
     * But, what about custom stuff having duplicates? Sticky.
-  * If Commando is "dead", and we need to override various things to support
-    our concept of Addons, if and when should we decide on just rolling our own?
+  * "availableMobs": { "atKillReductionLevel": { "0": [
+  * We need a location description for Outt's Butte. How/when to display it?
 
 ## Addons
   * Mobs JSON and "kill" command.

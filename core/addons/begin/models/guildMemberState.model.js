@@ -14,7 +14,7 @@ const LoidModel = require('../../../struct/models/LoidModel')
  */
 class GuildMemberStateModel extends LoidModel {
   constructor () {
-    super('core-model:guildMemberState', {
+    super('guildMemberState', {
       modelName: 'guildMemberState',
       attributes: {
         userId: {

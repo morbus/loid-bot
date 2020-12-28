@@ -2,6 +2,7 @@
 'use strict'
 const { AkairoClient, CommandHandler } = require('discord-akairo')
 const { BOT_COMMAND_PREFIX, BOT_DATABASE_DSN, BOT_OWNER_USERID } = process.env
+const LoidLocationHandler = require('./locations/LoidLocationHandler')
 const LoidModelHandler = require('./models/LoidModelHandler')
 const Sequelize = require('sequelize')
 const glob = require('glob')
@@ -21,7 +22,7 @@ class LoidClient extends AkairoClient {
     })
 
     /**
-     * Akairo's default CommandHandler.
+     * Akairo's CommandHandler.
      * @see loadAddonCommandsIn()
      * @type {module:discord-akairo.CommandHandler}
      */
@@ -29,6 +30,13 @@ class LoidClient extends AkairoClient {
       commandUtil: true,
       prefix: BOT_COMMAND_PREFIX
     })
+
+    /**
+     * LOID's LocationHandler.
+     * @see loadAddonLocationsIn()
+     * @type {LoidModelHandler}
+     */
+    this.locationHandler = new LoidLocationHandler(this)
 
     /**
      * Logging support with Winston.
@@ -75,6 +83,7 @@ class LoidClient extends AkairoClient {
    */
   loadAddonsIn (directories) {
     this.loadAddonCommandsIn(directories)
+    this.loadAddonLocationsIn(directories)
     this.loadAddonModelsIn(directories)
     return this
   }
@@ -92,6 +101,25 @@ class LoidClient extends AkairoClient {
       for (const filepath of glob.sync(pattern)) {
         this.logger.info(`Loading addon command ${filepath}.`)
         this.commandHandler.load(filepath)
+      }
+    }
+
+    return this
+  }
+
+  /**
+   * Load addon locations in the passed directories.
+   * @param {Array} directories - An array of directories to glob through.
+   * @return {LoidClient}
+   */
+  loadAddonLocationsIn (directories) {
+    for (const directory of directories) {
+      const pattern = path.join(directory, '/**/*.location.js')
+      this.logger.debug(`Looking for addon locations in ${pattern}.`)
+
+      for (const filepath of glob.sync(pattern)) {
+        this.logger.info(`Loading addon location ${filepath}.`)
+        this.locationHandler.load(filepath)
       }
     }
 

@@ -14,22 +14,22 @@ class LoidModel extends AkairoModule {
     attributes = {},
     options = {}
   } = {}) {
-    super(id, { })
+    super(id, {})
 
     /**
-     * The database model name.
+     * The name of the database model.
      * @type {string}
      */
     this.modelName = modelName
 
     /**
-     * The database model attributes.
+     * The ORM attributes of the database model.
      * @type {object}
      */
     this.attributes = attributes
 
     /**
-     * The database model options.
+     * The ORM options of the database model.
      * @type {object}
      */
     this.options = options
@@ -42,7 +42,7 @@ module.exports = LoidModel
  * Options to use for database model behavior.
  * Also includes properties from AkairoModuleOptions.
  * @typedef {AkairoModuleOptions} LoidModelOptions
- * @prop {string} [modelName=''] - The database model name.
- * @prop {object} [attributes={}] - The database model attributes.
- * @prop {object} [options={}] - The database model options.
+ * @prop {string} [modelName=''] - The name of the database model.
+ * @prop {object} [attributes={}] - The ORM attributes of the database model.
+ * @prop {object} [options={}] - The ORM options of the database model.
  */
