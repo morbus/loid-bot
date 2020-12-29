@@ -1,11 +1,10 @@
 
 'use strict'
-const { Discord } = require('discord.js')
 const { AkairoError, AkairoModule } = require('discord-akairo')
 
 /**
  * Represents a game location.
- * @param {string} id - Model ID.
+ * @param {string} id - Location ID.
  * @param {LoidLocationOptions} [options={}] - Options for the location.
  * @extends {AkairoModule}
  */
@@ -43,7 +42,7 @@ class LoidLocation extends AkairoModule {
    * @param {float} reductionLevel - The reduction level to find available mobs for.
    * @param {Discord.Guild|null} guild - The guild this request is taking place in.
    * @param {Discord.User|null} user - The user this request is related to.
-   * @returns {Array}
+   * @returns {string[]}
    */
   availableMobsAt (reductionType, reductionLevel, guild, user) {
     throw new AkairoError('NOT_IMPLEMENTED', this.constructor.name, 'availableMobsAt')

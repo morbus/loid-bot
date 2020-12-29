@@ -3,6 +3,7 @@
 const { AkairoClient, CommandHandler } = require('discord-akairo')
 const { BOT_COMMAND_PREFIX, BOT_DATABASE_DSN, BOT_OWNER_USERID } = process.env
 const LoidLocationHandler = require('./locations/LoidLocationHandler')
+const LoidMobHandler = require('./mobs/LoidMobHandler')
 const LoidModelHandler = require('./models/LoidModelHandler')
 const Sequelize = require('sequelize')
 const glob = require('glob')
@@ -54,6 +55,13 @@ class LoidClient extends AkairoClient {
     })
 
     /**
+     * LOID's MobHandler.
+     * @see loadAddonMobsIn()
+     * @type {LoidModelHandler}
+     */
+    this.mobHandler = new LoidMobHandler(this)
+
+    /**
      * LOID's database ModelHandler.
      * @see loadAddonModelsIn()
      * @type {LoidModelHandler}
@@ -84,6 +92,7 @@ class LoidClient extends AkairoClient {
   loadAddonsIn (directories) {
     this.loadAddonCommandsIn(directories)
     this.loadAddonLocationsIn(directories)
+    this.loadAddonMobsIn(directories)
     this.loadAddonModelsIn(directories)
     return this
   }
@@ -120,6 +129,25 @@ class LoidClient extends AkairoClient {
       for (const filepath of glob.sync(pattern)) {
         this.logger.info(`Loading addon location ${filepath}.`)
         this.locationHandler.load(filepath)
+      }
+    }
+
+    return this
+  }
+
+  /**
+   * Load addon mobs in the passed directories.
+   * @param {Array} directories - An array of directories to glob through.
+   * @return {LoidClient}
+   */
+  loadAddonMobsIn (directories) {
+    for (const directory of directories) {
+      const pattern = path.join(directory, '/**/*.mob.js')
+      this.logger.debug(`Looking for addon mobs in ${pattern}.`)
+
+      for (const filepath of glob.sync(pattern)) {
+        this.logger.info(`Loading addon mob ${filepath}.`)
+        this.mobHandler.load(filepath)
       }
     }
 
