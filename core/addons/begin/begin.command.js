@@ -45,8 +45,8 @@ class BeginCommand extends Command {
     const guildMemberState = this.client.sequelize.models.guildMemberState
     const [, created] = await guildMemberState.findOrCreate({
       where: {
-        userId: message.author.id,
         guildId: message.guild.id,
+        userId: message.author.id,
         type: 'messagesSeen',
         subtype: 'begin',
         subsubtype: 'intro',
@@ -100,8 +100,8 @@ class BeginCommand extends Command {
     const guildMemberState = this.client.sequelize.models.guildMemberState
     const [, created] = await guildMemberState.findOrCreate({
       where: {
-        userId: message.author.id,
         guildId: message.guild.id,
+        userId: message.author.id,
         type: 'messagesSeen',
         subtype: 'begin',
         subsubtype: 'anew',
@@ -117,8 +117,8 @@ class BeginCommand extends Command {
     // Welcome to your first location!
     await guildMemberState.findOrCreate({
       where: {
-        userId: message.author.id,
         guildId: message.guild.id,
+        userId: message.author.id,
         type: 'currentLocation',
         stringValue: 'outtsButte'
       }

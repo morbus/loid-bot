@@ -17,15 +17,15 @@ class GuildMemberStateModel extends LoidModel {
     super('guildMemberState', {
       modelName: 'guildMemberState',
       attributes: {
-        userId: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          comment: 'The unique ID of the Discord user.'
-        },
         guildId: {
           type: DataTypes.STRING,
           allowNull: false,
           comment: 'The unique ID of the Discord guild.'
+        },
+        userId: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          comment: 'The unique ID of the Discord user.'
         },
         type: {
           type: DataTypes.STRING,
@@ -62,15 +62,15 @@ class GuildMemberStateModel extends LoidModel {
         indexes: [
           {
             name: 'stateBooleanValuesIndex',
-            fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype', 'booleanValue']
+            fields: ['guildId', 'userId', 'type', 'subtype', 'subsubtype', 'booleanValue']
           },
           {
             name: 'stateFloatValuesIndex',
-            fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype', 'floatValue']
+            fields: ['guildId', 'userId', 'type', 'subtype', 'subsubtype', 'floatValue']
           },
           {
             name: 'stateStringValuesIndex',
-            fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype', 'stringValue']
+            fields: ['guildId', 'userId', 'type', 'subtype', 'subsubtype', 'stringValue']
           }
         ]
       }

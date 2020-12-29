@@ -14,7 +14,7 @@ class OuttsButteLocation extends LoidLocation {
   /**
    * @inheritDoc
    */
-  availableMobsAt (reductionType, reductionLevel) {
+  availableMobsAt (reductionType, reductionLevel, guild, user) {
     const availableMobs = {
       kill: {
         0: [

@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize')
 const LoidModel = require('../../../struct/models/LoidModel')
 
 /**
- * The master collection of reductions. Reductions are per-user per-guild,
+ * The master collection of reductions. Reductions are per-guild per-user,
  * and include a master type ("kill"), a subtypeA ("rat"), a subtypeB,
  * a freeform explanation ("10"), and then the amount of reduction earned
  * ("1"). That example would read as "this user in this guild has earned
@@ -15,15 +15,15 @@ class GuildMemberReductionsModel extends LoidModel {
     super('guildMemberReductions', {
       modelName: 'guildMemberReductions',
       attributes: {
-        userId: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          comment: 'The unique ID of the Discord user.'
-        },
         guildId: {
           type: DataTypes.STRING,
           allowNull: false,
           comment: 'The unique ID of the Discord guild.'
+        },
+        userId: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          comment: 'The unique ID of the Discord user.'
         },
         type: {
           type: DataTypes.STRING,
@@ -52,15 +52,15 @@ class GuildMemberReductionsModel extends LoidModel {
         indexes: [
           {
             name: 'reductionsIndex',
-            fields: ['userId', 'guildId', 'type', 'subtype', 'subsubtype']
+            fields: ['guildId', 'userId', 'type', 'subtype', 'subsubtype']
           },
           {
             name: 'reductionsCountIndex',
-            fields: ['userId', 'guildId', 'amount']
+            fields: ['guildId', 'userId', 'amount']
           },
           {
             name: 'reductionsCountByTypeIndex',
-            fields: ['userId', 'guildId', 'type', 'amount']
+            fields: ['guildId', 'userId', 'type', 'amount']
           }
         ]
       }
