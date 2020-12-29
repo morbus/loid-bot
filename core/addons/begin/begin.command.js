@@ -30,18 +30,18 @@ class BeginCommand extends Command {
    */
   async exec (message, args) {
     if (args.step === 'intro') {
-      return this.runBeginIntro(message)
+      return this.execBeginIntro(message)
     }
 
     if (args.step === 'anew') {
-      return this.runBeginAnew(message)
+      return this.execBeginAnew(message)
     }
   }
 
   /**
    * Display introductory messages for new players.
    */
-  async runBeginIntro (message) {
+  async execBeginIntro (message) {
     const guildMemberState = this.client.sequelize.models.guildMemberState
     const [, created] = await guildMemberState.findOrCreate({
       where: {
@@ -54,7 +54,7 @@ class BeginCommand extends Command {
       }
     })
 
-    // Message previously seen.
+    // Message already seen.
     if (created === false) {
       return message.reply(`*you've already begun. Try \`${BOT_COMMAND_PREFIX} begin anew\`.*`)
     }
@@ -63,7 +63,7 @@ class BeginCommand extends Command {
       .setColor('#ff0000')
       .setTitle('30 years')
       .setAuthor('Land of Idle Demons', message.author.avatarURL())
-      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/begin--pyromaniac.png')
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/beginIntro--pyromaniac.png')
       .setDescription(stripIndents`
         ${oneLine`
           30 years it has been since the demons won. 30 years since the demons
@@ -95,7 +95,7 @@ class BeginCommand extends Command {
   /**
    * Display the anew beginning for new players.
    */
-  async runBeginAnew (message) {
+  async execBeginAnew (message) {
     const outtsButteLocation = this.client.locationHandler.modules.get('outtsButte')
     const guildMemberState = this.client.sequelize.models.guildMemberState
     const [, created] = await guildMemberState.findOrCreate({
@@ -109,7 +109,7 @@ class BeginCommand extends Command {
       }
     })
 
-    // Message previously seen.
+    // Message already seen.
     if (created === false) {
       return message.reply(`*you've already begun. Try \`${BOT_COMMAND_PREFIX} status\` or \`${BOT_COMMAND_PREFIX} timers\`.*`)
     }

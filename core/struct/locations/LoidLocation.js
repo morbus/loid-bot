@@ -1,6 +1,6 @@
 
 'use strict'
-const { AkairoModule } = require('discord-akairo')
+const { AkairoError, AkairoModule } = require('discord-akairo')
 
 /**
  * Represents a game location.
@@ -33,6 +33,17 @@ class LoidLocation extends AkairoModule {
      * @type {string}
      */
     this.imageUrl = imageUrl
+  }
+
+  /**
+   * Return a list of mobs available at a location based on reduction level.
+   * @abstract
+   * @param {string} reductionType - The type of reduction level, usually 'kill'.
+   * @param {float} reductionLevel - The reduction level to find available mobs for.
+   * @returns {Array}
+   */
+  availableMobsAt (reductionType, reductionLevel) {
+    throw new AkairoError('NOT_IMPLEMENTED', this.constructor.name, 'availableMobsAt')
   }
 }
 

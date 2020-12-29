@@ -38,7 +38,7 @@ class GuildMemberReductionsModel extends LoidModel {
           type: DataTypes.STRING,
           comment: 'The subsubtype of reduction earned (e.g., giant, vorpalSword, outtsButte).'
         },
-        reduction: {
+        amount: {
           type: DataTypes.FLOAT,
           comment: 'The amount of reduction level earned, in seconds (usually between 1 and 10).'
         },
@@ -56,11 +56,11 @@ class GuildMemberReductionsModel extends LoidModel {
           },
           {
             name: 'reductionsCountIndex',
-            fields: ['userId', 'guildId', 'reduction']
+            fields: ['userId', 'guildId', 'amount']
           },
           {
             name: 'reductionsCountByTypeIndex',
-            fields: ['userId', 'guildId', 'type', 'reduction']
+            fields: ['userId', 'guildId', 'type', 'amount']
           }
         ]
       }
