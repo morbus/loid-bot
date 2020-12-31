@@ -8,7 +8,6 @@ const Discord = require('discord.js')
 /**
  * Begin the guild member's recovery of the Land of Idle Demons.
  */
-
 class BeginCommand extends Command {
   constructor () {
     super('begin', {
@@ -42,8 +41,7 @@ class BeginCommand extends Command {
    * Display introductory messages for new players.
    */
   async execBeginIntro (message) {
-    const guildMemberState = this.client.sequelize.models.guildMemberState
-    const [, created] = await guildMemberState.findOrCreate({
+    const [, created] = await this.client.sequelize.models.guildMemberState.findOrCreate({
       where: {
         guildId: message.guild.id,
         userId: message.author.id,
@@ -97,8 +95,7 @@ class BeginCommand extends Command {
    */
   async execBeginAnew (message) {
     const outtsButteLocation = this.client.locationHandler.modules.get('outtsButte')
-    const guildMemberState = this.client.sequelize.models.guildMemberState
-    const [, created] = await guildMemberState.findOrCreate({
+    const [, created] = await this.client.sequelize.models.guildMemberState.findOrCreate({
       where: {
         guildId: message.guild.id,
         userId: message.author.id,
@@ -115,7 +112,7 @@ class BeginCommand extends Command {
     }
 
     // Welcome to your first location!
-    await guildMemberState.findOrCreate({
+    await this.client.sequelize.models.guildMemberState.findOrCreate({
       where: {
         guildId: message.guild.id,
         userId: message.author.id,

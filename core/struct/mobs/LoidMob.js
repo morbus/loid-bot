@@ -42,7 +42,7 @@ module.exports = LoidMob
  * Options to use for mob behavior.
  * Also includes properties from AkairoModuleOptions.
  * @typedef {AkairoModuleOptions} LoidMobOptions
- * @prop {string} [mobName=''] - The name of the mob.
- * @prop {string} [description=''] - A description of the mob.
- * @prop {string} [imageUrl=''] - An image URL of the mob.
+ * @property {string} [mobName=''] - The name of the mob.
+ * @property {string} [description=''] - A description of the mob.
+ * @property {string} [imageUrl=''] - An image URL of the mob.
  */

@@ -55,7 +55,7 @@ module.exports = LoidLocation
  * Options to use for location behavior.
  * Also includes properties from AkairoModuleOptions.
  * @typedef {AkairoModuleOptions} LoidLocationOptions
- * @prop {string} [locationName=''] - The name of the location.
- * @prop {string} [description=''] - A description of the location.
- * @prop {string} [imageUrl=''] - An image URL of the location.
+ * @property {string} [locationName=''] - The name of the location.
+ * @property {string} [description=''] - A description of the location.
+ * @property {string} [imageUrl=''] - An image URL of the location.
  */

@@ -23,7 +23,7 @@ class OuttsButteLocation extends LoidLocation {
       }
     }
 
-    return availableMobs[reductionType][reductionLevel] || []
+    return availableMobs[reductionType][reductionLevel] ?? []
   }
 }
 

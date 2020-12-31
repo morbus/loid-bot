@@ -42,7 +42,7 @@ module.exports = LoidModel
  * Options to use for database model behavior.
  * Also includes properties from AkairoModuleOptions.
  * @typedef {AkairoModuleOptions} LoidModelOptions
- * @prop {string} [modelName=''] - The name of the database model.
- * @prop {object} [attributes={}] - The ORM attributes of the database model.
- * @prop {object} [options={}] - The ORM options of the database model.
+ * @property {string} [modelName=''] - The name of the database model.
+ * @property {object} [attributes={}] - The ORM attributes of the database model.
+ * @property {object} [options={}] - The ORM options of the database model.
  */

@@ -28,7 +28,7 @@ class GuildMemberReductionsModel extends LoidModel {
         type: {
           type: DataTypes.STRING,
           allowNull: false,
-          comment: 'The type of reduction earned (e.g., kill, craft, explore).'
+          comment: 'The type of reduction earned (e.g., kill, make, explore).'
         },
         subtype: {
           type: DataTypes.STRING,
