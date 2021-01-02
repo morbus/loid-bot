@@ -21,8 +21,8 @@ class KillCommand extends Command {
           type: 'number'
         },
         {
-          id: 'mob',
-          type: 'mob',
+          id: 'mobId',
+          type: 'mobId',
           unordered: true
         }
       ]
@@ -46,38 +46,46 @@ class KillCommand extends Command {
       return message.reply(`*you've yet to begin. Try \`${BOT_COMMAND_PREFIX} begin\`.*`)
     }
 
-    if (args.mob === 'UNKNOWN_MOB_ID') {
+    if (args.mobId === 'UNKNOWN_MOB_ID') {
       return message.reply('*this mob has yet to be discovered by you.*')
     }
 
     // With no args, show and resolve timers.
-    if (!args.count && !args.mob) {
+    if (!args.count && !args.mobId) {
       return message.reply('*@todo display kill timers and resolutions for guild member.*')
     }
 
     // Load the guild member's current location, kill reduction level, and available mobs.
     const killReductionLevel = await this.getKillReductionLevel(message.guild, message.author)
     const location = this.client.locationHandler.modules.get(currentLocationId.get('stringValue'))
-    const availableMobs = location.availableMobsAt('kill', killReductionLevel, message.guild, message.author)
-    const selectedMobs = []
+    const availableMobIds = location.availableMobsAt('kill', killReductionLevel, message.guild, message.author)
 
-    // The chosen mob is not available at their KRL.
-    if (args.mob && !availableMobs.includes(args.mob)) {
+    // The chosen mob is not available at this KRL.
+    if (args.mobId && !availableMobIds.includes(args.mobId)) {
       return message.reply('*this mob is not available for one of your skill.*')
     }
 
     // If no count, choose 1.
     args.count = args.count ?? 1
 
+// @todo tutorial message about killing etc.
 // @todo need to check how many timers are available and maxLength that.
+
+    // We appear ready to add some timers.
+    const timerCommand = this.client.commandHandler.modules.get('timers')
 
     // Add random or user-chosen mobs.
     for (let i = 1; i <= args.count; i++) {
-      const selectedMob = args.mob ?? availableMobs[Math.floor(Math.random() * availableMobs.length)]
-      selectedMobs.push(this.client.mobHandler.modules.get(selectedMob))
+      const selectedMobId = args.mobId ?? availableMobIds[Math.floor(Math.random() * availableMobIds.length)]
+      const selectedMob = this.client.mobHandler.modules.get(selectedMobId)
+      await timerCommand.addTimer({
+        guild: message.guild,
+        user: message.author,
+        type: 'kill',
+        subtype: selectedMobId,
+        duration: selectedMob.getDurationAt('kill', killReductionLevel, message.guild, message.author)
+      })
     }
-
-// @todo set timers here for selectedMobs. emit events to mess with?
   }
 
   /**
@@ -86,15 +94,15 @@ class KillCommand extends Command {
    * (Yes, I know it's "mosquitoes": https://github.com/plurals/pluralize/issues/165)
    */
   addArgumentTypes () {
-    this.client.commandHandler.resolver.addType('mob', (message, phrase) => {
+    this.client.commandHandler.resolver.addType('mobId', (message, phrase) => {
       // The isNaN() check allows us to support "kill mosquito" and "kill 33
       // mosquitos" without "33" being erroneously treated as a mob ID, and
       // then causing "UNKNOWN_MOB_ID" to be returned.
       if (phrase !== '' && isNaN(phrase)) {
-        for (const mob of this.client.mobHandler.modules.keys()) {
-          if ((mob.toLowerCase() === phrase.toLowerCase()) ||
-            (mob.toLowerCase() === pluralize.singular(phrase.toLowerCase()))) {
-            return mob
+        for (const mobId of this.client.mobHandler.modules.keys()) {
+          if ((mobId.toLowerCase() === phrase.toLowerCase()) ||
+            (mobId.toLowerCase() === pluralize.singular(phrase.toLowerCase()))) {
+            return mobId
           }
         }
 
@@ -107,8 +115,8 @@ class KillCommand extends Command {
 
   /**
    * Get the kill reduction level of the passed guild member.
-   * @param {Discord.Guild|null} guild - The guild this request is taking place in.
-   * @param {Discord.User|null} user - The user this request is related to.
+   * @param {Discord.Guild} guild - The guild this request is taking place in.
+   * @param {Discord.User} user - The user this request is related to.
    * @returns {Promise<number>}
    */
   async getKillReductionLevel (guild, user) {

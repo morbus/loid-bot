@@ -7,8 +7,14 @@ class MosquitoMob extends LoidMob {
     super('mosquito', {
       mobName: 'Mosquito',
       description: '',
-      imageUrl: 'https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/mosquito--amber-mosquito.png'
+      imageUrl: 'https://github.com/morbus/loidbot/raw/main/core/addons/begin/images/mosquito--amber-mosquito.png',
     })
+  }
+
+  durationAt (reductionType, reductionLevel, guild, user) {
+    return {
+      seconds: 30
+    }
   }
 }
 

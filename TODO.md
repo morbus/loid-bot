@@ -10,7 +10,11 @@
   * We need similar duplicate handling as Types/Commands in Commando.
     * Or, do we? Will custom stuff just override core stuff?
     * But, what about custom stuff having duplicates? Sticky.
-  * Set different embed colors based on type? grey for messages, red for kill, etc.  
+  * Set different embed colors based on type? grey for messages, red for kill, etc.
+  * Move all bottom docs in struct to the top, cos I like 'em there better.
+  * getKillReductionLevel() should become generic, but where to put it? Status?
+  * try to have as many generic getters as possible so we can emit custom events from them.
+  * all our getters should use options arrays where possible.
 
 ## Addons
   * Mobs JSON and "kill" command.
@@ -29,6 +33,7 @@
     * Make Reduction Level (MRL)
   * "available <things>" to show what's available to folks.
   * mob rarity can be handled by seeding availableMobs multiple times.
+  * replace kill's use of availableMobsAt with a getAvailableMobs so we can add events.
 
 ## Other
   * Angry? Amber? Arctic? Ice?

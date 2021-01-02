@@ -34,6 +34,13 @@ class LoidMob extends AkairoModule {
      */
     this.imageUrl = imageUrl
   }
+
+  /**
+   * @todo
+   */
+  getDurationAt (reductionType, reductionLevel, guild, user) {
+    return this.durationAt(reductionType, reductionLevel, guild, user)
+  }
 }
 
 module.exports = LoidMob

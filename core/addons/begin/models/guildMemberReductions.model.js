@@ -4,8 +4,8 @@ const { DataTypes } = require('sequelize')
 const LoidModel = require('../../../struct/models/LoidModel')
 
 /**
- * The master collection of reductions. Reductions are per-guild per-user,
- * and include a master type ("kill"), a subtypeA ("rat"), a subtypeB,
+ * The master collection of guild member reductions, per-guild per-user.
+ * They include a master type ("kill"), a subtypeA ("rat"), a subtypeB,
  * a freeform explanation ("10"), and then the amount of reduction earned
  * ("1"). That example would read as "this user in this guild has earned
  * 1 reduction level for killing ten rats".
