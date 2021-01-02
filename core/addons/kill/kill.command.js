@@ -68,10 +68,12 @@ class KillCommand extends Command {
     // If no count, choose 1.
     args.count = args.count ?? 1
 
-// @todo tutorial message about killing etc.
+    // One-time introduction.
+    this.execKillIntro(message)
+
 // @todo need to check how many timers are available and maxLength that.
 
-    // We appear ready to add some timers.
+    // We're ready to add some timers.
     const timerCommand = this.client.commandHandler.modules.get('timers')
 
     // Add random or user-chosen mobs.
@@ -86,6 +88,35 @@ class KillCommand extends Command {
         duration: selectedMob.getDurationAt('kill', killReductionLevel, message.guild, message.author)
       })
     }
+  }
+
+  /**
+   * Display an introductory message about killing.
+   */
+  execKillIntro (message) {
+    return message.reply(new Discord.MessageEmbed()
+      .setColor('#ff0000')
+      .setTitle('Deaths are pre-ordained')
+      .setAuthor('Land of Idle Demons', message.author.avatarURL())
+      .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/kill/images/killIntro--carrion.png')
+      .setDescription(stripIndents`
+        ${oneLine`
+          *You will always succeed at killing; it's simply a matter of how
+          quickly. Deaths for the weakest mobs, like a \`mosquito\`, only
+          take 30 seconds. Stronger mobs can take upwards of hours, days, or
+          weeks, and bosses even longer. The more you kill, the faster you
+          kill, earning **kill reduction levels** (KRL) that lessen your
+          effort across all mobs.* 
+        `}
+
+        ${oneLine`
+          *To check all your timers, type \`${BOT_COMMAND_PREFIX} timers\`.*
+        `}
+
+        ${oneLine`
+        `}
+      `)
+    )
   }
 
   /**

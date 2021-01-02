@@ -15,6 +15,7 @@
   * getKillReductionLevel() should become generic, but where to put it? Status?
   * try to have as many generic getters as possible so we can emit custom events from them.
   * all our getters should use options arrays where possible.
+  * Move a lot more config into env? colors? starting location? bot title?
 
 ## Addons
   * Mobs JSON and "kill" command.
