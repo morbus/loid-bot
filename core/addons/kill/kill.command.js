@@ -52,7 +52,8 @@ class KillCommand extends Command {
 
     // With no args, show and resolve timers.
     if (!args.count && !args.mobId) {
-      return message.reply('*@todo display kill timers and resolutions for guild member.*')
+// @todo display current kill timers
+// @todo resolve completed kill timers.
     }
 
     // Load the guild member's current location, kill reduction level, and available mobs.
@@ -60,23 +61,32 @@ class KillCommand extends Command {
     const location = this.client.locationHandler.modules.get(currentLocationId.get('stringValue'))
     const availableMobIds = location.availableMobsAt('kill', killReductionLevel, message.guild, message.author)
 
-    // The chosen mob is not available at this KRL.
+    // The mob exists, but is not available at this KRL.
     if (args.mobId && !availableMobIds.includes(args.mobId)) {
       return message.reply('*this mob is not available for one of your skill.*')
     }
 
-    // If no count, choose 1.
+    // If no count, use 1.
     args.count = args.count ?? 1
 
     // One-time introduction.
-    this.execKillIntro(message)
+    // KRL check saves us a DB query.
+    if (killReductionLevel === 0) {
+      await this.execKillIntro(message)
+    }
 
-// @todo need to check how many timers are available and maxLength that.
-
-    // We're ready to add some timers.
+    // We're ready to add some timers, assuming there are some to spare.
     const timerCommand = this.client.commandHandler.modules.get('timers')
+    const availableTimers = await timerCommand.getAvailableTimers({guild: message.guild, user: message.author })
 
-    // Add random or user-chosen mobs.
+    if (availableTimers <= 0) {
+      return message.reply('*you do not have enough time to kill more.*')
+    }
+
+    // If they don't have enough available timers, use as many as possible.
+    args.count = (args.count > availableTimers) ? availableTimers : args.count
+
+    // Add random or guild-member-chosen mobs.
     for (let i = 1; i <= args.count; i++) {
       const selectedMobId = args.mobId ?? availableMobIds[Math.floor(Math.random() * availableMobIds.length)]
       const selectedMob = this.client.mobHandler.modules.get(selectedMobId)
@@ -88,32 +98,47 @@ class KillCommand extends Command {
         duration: selectedMob.getDurationAt('kill', killReductionLevel, message.guild, message.author)
       })
     }
+
+// @todo display results of timer creation.
+
   }
 
   /**
    * Display an introductory message about killing.
    */
-  execKillIntro (message) {
+  async execKillIntro (message) {
+    const [, created] = await this.client.sequelize.models.guildMemberState.findOrCreate({
+      where: {
+        guildId: message.guild.id,
+        userId: message.author.id,
+        type: 'messagesSeen',
+        subtype: 'kill',
+        subsubtype: 'intro',
+        booleanValue: 1
+      }
+    })
+
+    // Message already seen.
+    if (created === false) {
+      return null
+    }
+
     return message.reply(new Discord.MessageEmbed()
       .setColor('#ff0000')
-      .setTitle('Deaths are pre-ordained')
+      .setTitle('Their deaths are inevitable')
       .setAuthor('Land of Idle Demons', message.author.avatarURL())
       .setThumbnail('https://github.com/morbus/loidbot/raw/main/core/addons/kill/images/killIntro--carrion.png')
       .setDescription(stripIndents`
         ${oneLine`
-          *You will always succeed at killing; it's simply a matter of how
+          *You will always succeed at killing; it is simply a matter of how
           quickly. Deaths for the weakest mobs, like a \`mosquito\`, only
-          take 30 seconds. Stronger mobs can take upwards of hours, days, or
-          weeks, and bosses even longer. The more you kill, the faster you
-          kill, earning **kill reduction levels** (KRL) that lessen your
-          effort across all mobs.* 
+          take 30 seconds. Stronger mobs and bosses can take hours, days,
+          or weeks. The more you kill, the faster you kill, earning **kill
+          reduction levels (KRL)** that speed your efforts against all mobs.* 
         `}
 
         ${oneLine`
-          *To check all your timers, type \`${BOT_COMMAND_PREFIX} timers\`.*
-        `}
-
-        ${oneLine`
+          *To check your timers, type \`${BOT_COMMAND_PREFIX} timers\`.*
         `}
       `)
     )

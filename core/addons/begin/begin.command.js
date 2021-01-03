@@ -111,14 +111,20 @@ class BeginCommand extends Command {
       return message.reply(`*you've already begun. Try \`${BOT_COMMAND_PREFIX} status\` or \`${BOT_COMMAND_PREFIX} timers\`.*`)
     }
 
-    // Welcome to your first location!
-    await this.client.sequelize.models.guildMemberState.findOrCreate({
-      where: {
-        guildId: message.guild.id,
-        userId: message.author.id,
-        type: 'currentLocation',
-        stringValue: 'outtsButte'
-      }
+    // New players start in Outt's Butte.
+    await this.client.sequelize.models.guildMemberState.create({
+      guildId: message.guild.id,
+      userId: message.author.id,
+      type: 'currentLocation',
+      stringValue: 'outtsButte'
+    })
+
+    // New players start with a maximum of two timers.
+    await this.client.sequelize.models.guildMemberState.create({
+      guildId: message.guild.id,
+      userId: message.author.id,
+      type: 'maximumTimers',
+      floatValue: 2
     })
 
     // "It goes Inns your Mouth and Outt's your Butte!"
