@@ -19,6 +19,7 @@
   * use attributes on all queries to reduce SELECT * sorta usage.
   * make begin anew state creation a bulk update?
   * move the db models to timers/status?
+  * state getters/setters in status to support caching in future?
 
 ## Addons
   * Mobs JSON and "kill" command.

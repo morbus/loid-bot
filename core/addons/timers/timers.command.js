@@ -14,13 +14,7 @@ class TimersCommand extends Command {
     super('timers', {
       aliases: ['timers'],
       channel: 'guild',
-      description: 'Show current activity in the Land of Idle Demons.',
-      args: [
-        {
-          id: 'type',
-          type: 'string'
-        }
-      ]
+      description: 'Show current activity in the Land of Idle Demons.'
     })
   }
 

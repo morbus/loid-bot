@@ -112,7 +112,7 @@ class LoidClient extends AkairoClient {
         const command = this.commandHandler.load(filepath)
 
         if (typeof command.addArgumentTypes === 'function') {
-          this.logger.info(`Loading addon argument types for ${filepath}.`)
+          this.logger.info(`Loading addon argument types ${filepath}.`)
           command.addArgumentTypes()
         }
       }
