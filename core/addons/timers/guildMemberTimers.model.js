@@ -1,7 +1,7 @@
 
 'use strict'
 const { DataTypes } = require('sequelize')
-const LoidModel = require('../../../struct/models/LoidModel')
+const LoidModel = require('../../struct/models/LoidModel')
 
 /**
  * The master collection of guild member timers. Each timer requires an

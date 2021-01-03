@@ -57,8 +57,9 @@ class KillCommand extends Command {
     }
 
     // Load the guild member's current location, kill reduction level, and available mobs.
-    const killReductionLevel = await this.getKillReductionLevel(message.guild, message.author)
+    const status = this.client.commandHandler.modules.get('status')
     const location = this.client.locationHandler.modules.get(currentLocationId.get('stringValue'))
+    const killReductionLevel = await status.getReductionLevel('kill', message.guild, message.author)
     const availableMobIds = location.getAvailableMobsAt('kill', killReductionLevel, message.guild, message.author)
 
     // The mob exists, but is not available at this KRL.
@@ -76,8 +77,8 @@ class KillCommand extends Command {
     }
 
     // We're ready to add some timers, assuming there are some to spare.
-    const timerCommand = this.client.commandHandler.modules.get('timers')
-    const availableTimers = await timerCommand.getAvailableTimers({ guild: message.guild, user: message.author })
+    const timer = this.client.commandHandler.modules.get('timers')
+    const availableTimers = await timer.getAvailableTimers({ guild: message.guild, user: message.author })
 
     if (availableTimers <= 0) {
       return message.reply('*you do not have enough time to kill more.*')
@@ -90,7 +91,7 @@ class KillCommand extends Command {
     for (let i = 1; i <= args.count; i++) {
       const selectedMobId = args.mobId ?? availableMobIds[Math.floor(Math.random() * availableMobIds.length)]
       const selectedMob = this.client.mobHandler.modules.get(selectedMobId)
-      await timerCommand.addTimer({
+      await timer.addTimer({
         guild: message.guild,
         user: message.author,
         type: 'kill',
@@ -167,25 +168,6 @@ class KillCommand extends Command {
 
       return null
     })
-  }
-
-  /**
-   * Get the kill reduction level of the passed guild member.
-   * @param {Discord.Guild} guild - The guild this request is taking place in.
-   * @param {Discord.User} user - The user this request is related to.
-   * @return {Promise<number>}
-   */
-  async getKillReductionLevel (guild, user) {
-    const killReductionLevel = await this.client.sequelize.models.guildMemberReductions.findAll({
-      attributes: [[this.client.sequelize.fn('SUM', this.client.sequelize.col('amount')), 'total']],
-      where: {
-        guildId: guild.id,
-        userId: user.id,
-        type: 'kill'
-      }
-    })
-
-    return killReductionLevel[0].get('total') ?? 0
   }
 }
 

@@ -10,15 +10,12 @@
     * Or, do we? Will custom stuff just override core stuff?
     * But, what about custom stuff having duplicates? Sticky.
   * Set different embed colors based on type? grey for messages, red for kill, etc.
-  * getKillReductionLevel() should become generic, but where to put it? Status?
   * try to have as many generic getters as possible so we can emit custom events from them.
-  * all our getters should use options arrays where possible.
   * Move a lot more config into env? colors? starting location? bot title?
   * To reduce DB work, we could probably cache a lot of things in memory.
   * we should probably check all queries to make sure indexes are being used.
   * use attributes on all queries to reduce SELECT * sorta usage.
   * make begin anew state creation a bulk update?
-  * move the db models to timers/status?
   * state getters/setters in status to support caching in future?
 
 ## Addons
@@ -38,7 +35,6 @@
     * Make Reduction Level (MRL)
   * "available <things>" to show what's available to folks.
   * mob rarity can be handled by seeding availableMobs multiple times.
-  * replace kill's use of availableMobsAt with a getAvailableMobs so we can add events.
   * luck addon that listens on remainingTimers = 0 and has 1/2/3/4/5+% chance of granting one for the day.
 
 ## Other

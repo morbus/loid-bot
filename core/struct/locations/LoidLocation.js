@@ -45,7 +45,7 @@ class LoidLocation extends AkairoModule {
    * @param {float} reductionLevel - The amount of reduction level.
    * @param {Discord.Guild} guild - The guild this request is from.
    * @param {Discord.User} user - The user this request is for.
-   * @return {string[]} mobs - Mobs available at passed reduction level.
+   * @return {string[]} mobs - Mobs available at this reduction level.
    */
   availableMobsAt (reductionType, reductionLevel, guild, user) {
     throw new AkairoError('NOT_IMPLEMENTED', this.constructor.name, 'availableMobsAt')
@@ -57,7 +57,7 @@ class LoidLocation extends AkairoModule {
    * @param {float} reductionLevel - The amount of reduction level.
    * @param {Discord.Guild} guild - The guild this request is from.
    * @param {Discord.User} user - The user this request is for.
-   * @return {string[]} mobs - Mobs available at passed reduction level.
+   * @return {string[]} mobs - Mobs available at this reduction level.
    */
   getAvailableMobsAt (reductionType, reductionLevel, guild, user) {
     return this.availableMobsAt(reductionType, reductionLevel, guild, user)
