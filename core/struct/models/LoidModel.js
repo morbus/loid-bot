@@ -5,7 +5,10 @@ const { AkairoModule } = require('discord-akairo')
 /**
  * Represents a database model.
  * @param {string} id - Model ID.
- * @param {LoidModelOptions} [options={}] - Options for the model.
+ * @param {options} options - Options for the model.
+ * @param {string} options.modelName - The name of the database model.
+ * @param {object} options.attributes - The ORM attributes of the database model.
+ * @param {object} options.options - The ORM options of the database model.
  * @extends {AkairoModule}
  */
 class LoidModel extends AkairoModule {
@@ -37,12 +40,3 @@ class LoidModel extends AkairoModule {
 }
 
 module.exports = LoidModel
-
-/**
- * Options to use for database model behavior.
- * Also includes properties from AkairoModuleOptions.
- * @typedef {AkairoModuleOptions} LoidModelOptions
- * @property {string} [modelName=''] - The name of the database model.
- * @property {object} [attributes={}] - The ORM attributes of the database model.
- * @property {object} [options={}] - The ORM options of the database model.
- */

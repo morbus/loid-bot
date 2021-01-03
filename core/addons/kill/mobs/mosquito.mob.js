@@ -11,6 +11,9 @@ class MosquitoMob extends LoidMob {
     })
   }
 
+  /**
+   * @inheritdoc
+   */
   durationAt (reductionType, reductionLevel, guild, user) {
     return {
       seconds: 30

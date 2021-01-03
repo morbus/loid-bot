@@ -5,7 +5,10 @@ const { AkairoError, AkairoModule } = require('discord-akairo')
 /**
  * Represents a game location.
  * @param {string} id - Location ID.
- * @param {LoidLocationOptions} [options={}] - Options for the location.
+ * @param {options} options - Options for the location.
+ * @param {string} options.locationName - The name of the location.
+ * @param {string} options.description - A description of the location.
+ * @param {string} options.imageUrl - An image URL of the location.
  * @extends {AkairoModule}
  */
 class LoidLocation extends AkairoModule {
@@ -36,26 +39,29 @@ class LoidLocation extends AkairoModule {
   }
 
   /**
-   * Return a list of mobs available at a location based on reduction level.
+   * Define mobs available at a location based on reduction level.
    * @abstract
-   * @param {string} reductionType - The type of reduction level, usually 'kill'.
-   * @param {float} reductionLevel - The reduction level to find available mobs for.
-   * @param {Discord.Guild} guild - The guild this request is taking place in.
-   * @param {Discord.User} user - The user this request is related to.
-   * @returns {string[]}
+   * @param {string} reductionType - The type of reduction level.
+   * @param {float} reductionLevel - The amount of reduction level.
+   * @param {Discord.Guild} guild - The guild this request is from.
+   * @param {Discord.User} user - The user this request is for.
+   * @return {string[]} mobs - Mobs available at passed reduction level.
    */
   availableMobsAt (reductionType, reductionLevel, guild, user) {
     throw new AkairoError('NOT_IMPLEMENTED', this.constructor.name, 'availableMobsAt')
   }
+
+  /**
+   * Return mobs available at a location based on reduction level.
+   * @param {string} reductionType - The type of reduction level.
+   * @param {float} reductionLevel - The amount of reduction level.
+   * @param {Discord.Guild} guild - The guild this request is from.
+   * @param {Discord.User} user - The user this request is for.
+   * @return {string[]} mobs - Mobs available at passed reduction level.
+   */
+  getAvailableMobsAt (reductionType, reductionLevel, guild, user) {
+    return this.availableMobsAt(reductionType, reductionLevel, guild, user)
+  }
 }
 
 module.exports = LoidLocation
-
-/**
- * Options to use for location behavior.
- * Also includes properties from AkairoModuleOptions.
- * @typedef {AkairoModuleOptions} LoidLocationOptions
- * @property {string} [locationName=''] - The name of the location.
- * @property {string} [description=''] - A description of the location.
- * @property {string} [imageUrl=''] - An image URL of the location.
- */

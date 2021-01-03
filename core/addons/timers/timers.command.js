@@ -32,7 +32,7 @@ class TimersCommand extends Command {
    * @param {string} options.type - The type of timer (e.g., kill, make, explore).
    * @param {string|null} options.subtype - The subtype of timer (e.g., rat, weapon, village).
    * @param {string|null} options.subsubtype - The subsubtype of timer (e.g., giant, vorpalSword, outtsButte).
-   * @param {Object} options.duration - An object with keys of 'seconds', 'minutes', etc.
+   * @param {Object} options.duration - An object with 'seconds', 'minutes', etc.
    * @return {Promise<void>}
    */
   async addTimer (options) {

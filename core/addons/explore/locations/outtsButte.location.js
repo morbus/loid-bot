@@ -12,7 +12,7 @@ class OuttsButteLocation extends LoidLocation {
   }
 
   /**
-   * @inheritDoc
+   * @inheritdoc
    */
   availableMobsAt (reductionType, reductionLevel, guild, user) {
     const availableMobs = {

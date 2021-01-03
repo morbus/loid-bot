@@ -59,7 +59,7 @@ class KillCommand extends Command {
     // Load the guild member's current location, kill reduction level, and available mobs.
     const killReductionLevel = await this.getKillReductionLevel(message.guild, message.author)
     const location = this.client.locationHandler.modules.get(currentLocationId.get('stringValue'))
-    const availableMobIds = location.availableMobsAt('kill', killReductionLevel, message.guild, message.author)
+    const availableMobIds = location.getAvailableMobsAt('kill', killReductionLevel, message.guild, message.author)
 
     // The mob exists, but is not available at this KRL.
     if (args.mobId && !availableMobIds.includes(args.mobId)) {
@@ -77,7 +77,7 @@ class KillCommand extends Command {
 
     // We're ready to add some timers, assuming there are some to spare.
     const timerCommand = this.client.commandHandler.modules.get('timers')
-    const availableTimers = await timerCommand.getAvailableTimers({guild: message.guild, user: message.author })
+    const availableTimers = await timerCommand.getAvailableTimers({ guild: message.guild, user: message.author })
 
     if (availableTimers <= 0) {
       return message.reply('*you do not have enough time to kill more.*')
@@ -173,7 +173,7 @@ class KillCommand extends Command {
    * Get the kill reduction level of the passed guild member.
    * @param {Discord.Guild} guild - The guild this request is taking place in.
    * @param {Discord.User} user - The user this request is related to.
-   * @returns {Promise<number>}
+   * @return {Promise<number>}
    */
   async getKillReductionLevel (guild, user) {
     const killReductionLevel = await this.client.sequelize.models.guildMemberReductions.findAll({

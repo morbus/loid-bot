@@ -12,7 +12,7 @@ const winston = require('winston')
 
 /**
  * The LOID framework client.
- * @param {AkairoOptions} [options={}] - Options for the client.
+ * @param {AkairoOptions} [options={}] - Options for the Akairo client.
  * @param {ClientOptions} [clientOptions] - Options for Discord JS client.
  * @extends {AkairoClient}
  */
@@ -98,8 +98,8 @@ class LoidClient extends AkairoClient {
   }
 
   /**
-   * Load addon commands in the passed directories.
-   * @param {Array} directories - An array of directories to glob through.
+   * Load addon *.command.js files in the passed directories.
+   * @param {Array} directories - The directories to search through.
    * @return {LoidClient}
    */
   loadAddonCommandsIn (directories) {
@@ -122,8 +122,8 @@ class LoidClient extends AkairoClient {
   }
 
   /**
-   * Load addon locations in the passed directories.
-   * @param {Array} directories - An array of directories to glob through.
+   * Load addon *.location.js files in the passed directories.
+   * @param {Array} directories - The directories to search through.
    * @return {LoidClient}
    */
   loadAddonLocationsIn (directories) {
@@ -141,8 +141,8 @@ class LoidClient extends AkairoClient {
   }
 
   /**
-   * Load addon mobs in the passed directories.
-   * @param {Array} directories - An array of directories to glob through.
+   * Load addon *.mob.js files in the passed directories.
+   * @param {Array} directories - The directories to search through.
    * @return {LoidClient}
    */
   loadAddonMobsIn (directories) {
@@ -160,8 +160,8 @@ class LoidClient extends AkairoClient {
   }
 
   /**
-   * Load addon models in the passed directories.
-   * @param {Array} directories - An array of directories to glob through.
+   * Load addon *.model.js files in the passed directories.
+   * @param {Array} directories - The directories to search through.
    * @return {LoidClient}
    */
   loadAddonModelsIn (directories) {

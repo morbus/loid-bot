@@ -10,7 +10,6 @@
     * Or, do we? Will custom stuff just override core stuff?
     * But, what about custom stuff having duplicates? Sticky.
   * Set different embed colors based on type? grey for messages, red for kill, etc.
-  * Move all bottom docs in struct to the top, cos I like 'em there better.
   * getKillReductionLevel() should become generic, but where to put it? Status?
   * try to have as many generic getters as possible so we can emit custom events from them.
   * all our getters should use options arrays where possible.
@@ -18,8 +17,8 @@
   * To reduce DB work, we could probably cache a lot of things in memory.
   * we should probably check all queries to make sure indexes are being used.
   * use attributes on all queries to reduce SELECT * sorta usage.
-  * switch over to jsdoc param option.key usage?
   * make begin anew state creation a bulk update?
+  * move the db models to timers/status?
 
 ## Addons
   * Mobs JSON and "kill" command.
