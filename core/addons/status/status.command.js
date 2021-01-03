@@ -25,7 +25,10 @@ class StatusCommand extends Command {
    * @return {Promise<number>}
    */
   async getReductionLevel (type, guild, user) {
-    const whereFields = { guildId: guild.id, userId: user.id }
+    const whereFields = {
+      guildId: guild.id,
+      userId: user.id
+    }
 
     if (type !== 'total') {
       whereFields.type = type
