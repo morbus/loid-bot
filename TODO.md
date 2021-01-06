@@ -14,9 +14,6 @@
   * Move a lot more config into env? colors? starting location? bot title?
   * To reduce DB work, we could probably cache a lot of things in memory.
   * we should probably check all queries to make sure indexes are being used.
-  * use attributes on all queries to reduce SELECT * sorta usage.
-  * make begin anew state creation a bulk update?
-  * state getters/setters in status to support caching in future?
 
 ## Addons
   * Mobs JSON and "kill" command.
@@ -36,6 +33,9 @@
   * "available <things>" to show what's available to folks.
   * mob rarity can be handled by seeding availableMobs multiple times.
   * luck addon that listens on remainingTimers = 0 and has 1/2/3/4/5+% chance of granting one for the day.
+  * I'd love an "unlocks" command to show next unlocks. that'd be difficult. maybe as result of timer resolution?
+  * getReductionLevel needs to support subtype and subsubtype.
+  * create incrementState and decrementState?
 
 ## Other
   * Angry? Amber? Arctic? Ice?

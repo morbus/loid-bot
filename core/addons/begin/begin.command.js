@@ -111,17 +111,17 @@ class BeginCommand extends Command {
     }
 
     // New players start in Outt's Butte.
-    await this.client.sequelize.models.guildMemberState.create({
-      guildId: message.guild.id,
-      userId: message.author.id,
+    await statusCommand.setState({
+      guild: message.guild,
+      user: message.author,
       type: 'currentLocation',
       stringValue: 'outtsButte'
     })
 
     // New players start with a maximum of two timers.
-    await this.client.sequelize.models.guildMemberState.create({
-      guildId: message.guild.id,
-      userId: message.author.id,
+    await statusCommand.setState({
+      guild: message.guild,
+      user: message.author,
       type: 'maximumTimers',
       floatValue: 2
     })
