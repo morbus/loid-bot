@@ -33,13 +33,11 @@ class KillCommand extends Command {
    * Create timers for killing named or random mobs.
    */
   async exec (message, args) {
-    const currentLocationId = await this.client.sequelize.models.guildMemberState.findOne({
-      attributes: ['stringValue'],
-      where: {
-        guildId: message.guild.id,
-        userId: message.author.id,
-        type: 'currentLocation'
-      }
+    const statusCommand = this.client.commandHandler.modules.get('status')
+    const currentLocationId = await statusCommand.getState({
+      guild: message.guild,
+      user: message.author,
+      type: 'currentLocation'
     })
 
     if (!currentLocationId) {
@@ -52,14 +50,13 @@ class KillCommand extends Command {
 
     // With no args, show and resolve timers.
     if (!args.count && !args.mobId) {
-// @todo display current kill timers
-// @todo resolve completed kill timers.
+      // @todo display current kill timers
+      // @todo resolve completed kill timers.
     }
 
     // Load the guild member's current location, kill reduction level, and available mobs.
-    const status = this.client.commandHandler.modules.get('status')
     const location = this.client.locationHandler.modules.get(currentLocationId.get('stringValue'))
-    const killReductionLevel = await status.getReductionLevel('kill', message.guild, message.author)
+    const killReductionLevel = await statusCommand.getReductionLevel('kill', message.guild, message.author)
     const availableMobIds = location.getAvailableMobsAt('kill', killReductionLevel, message.guild, message.author)
 
     // The mob exists, but is not available at this KRL.
@@ -77,8 +74,8 @@ class KillCommand extends Command {
     }
 
     // We're ready to add some timers, assuming there are some to spare.
-    const timer = this.client.commandHandler.modules.get('timers')
-    const availableTimers = await timer.getAvailableTimers({ guild: message.guild, user: message.author })
+    const timerCommand = this.client.commandHandler.modules.get('timers')
+    const availableTimers = await timerCommand.getAvailableTimers({ guild: message.guild, user: message.author })
 
     if (availableTimers <= 0) {
       return message.reply('*you do not have enough time to kill more.*')
@@ -91,7 +88,7 @@ class KillCommand extends Command {
     for (let i = 1; i <= args.count; i++) {
       const selectedMobId = args.mobId ?? availableMobIds[Math.floor(Math.random() * availableMobIds.length)]
       const selectedMob = this.client.mobHandler.modules.get(selectedMobId)
-      await timer.addTimer({
+      await timerCommand.addTimer({
         guild: message.guild,
         user: message.author,
         type: 'kill',
@@ -100,23 +97,22 @@ class KillCommand extends Command {
       })
     }
 
-// @todo display results of timer creation.
-
+    // @todo display results of timer creation.
   }
 
   /**
    * Display an introductory message about killing.
    */
   async execKillIntro (message) {
-    const [, created] = await this.client.sequelize.models.guildMemberState.findOrCreate({
-      where: {
-        guildId: message.guild.id,
-        userId: message.author.id,
-        type: 'messagesSeen',
-        subtype: 'kill',
-        subsubtype: 'intro',
-        booleanValue: 1
-      }
+    const statusCommand = this.client.commandHandler.modules.get('status')
+    const [, created] = await statusCommand.getState({
+      queryType: 'findOrCreate',
+      guild: message.guild,
+      user: message.author,
+      type: 'messagesSeen',
+      subtype: 'kill',
+      subsubtype: 'intro',
+      booleanValue: 1
     })
 
     // Message already seen.

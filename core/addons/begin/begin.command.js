@@ -41,15 +41,15 @@ class BeginCommand extends Command {
    * Display introductory messages for new players.
    */
   async execBeginIntro (message) {
-    const [, created] = await this.client.sequelize.models.guildMemberState.findOrCreate({
-      where: {
-        guildId: message.guild.id,
-        userId: message.author.id,
-        type: 'messagesSeen',
-        subtype: 'begin',
-        subsubtype: 'intro',
-        booleanValue: 1
-      }
+    const statusCommand = this.client.commandHandler.modules.get('status')
+    const [, created] = await statusCommand.getState({
+      queryType: 'findOrCreate',
+      guild: message.guild,
+      user: message.author,
+      type: 'messagesSeen',
+      subtype: 'begin',
+      subsubtype: 'intro',
+      booleanValue: 1
     })
 
     // Message already seen.
@@ -94,21 +94,20 @@ class BeginCommand extends Command {
    * Display the anew beginning for new players.
    */
   async execBeginAnew (message) {
-    const outtsButteLocation = this.client.locationHandler.modules.get('outtsButte')
-    const [, created] = await this.client.sequelize.models.guildMemberState.findOrCreate({
-      where: {
-        guildId: message.guild.id,
-        userId: message.author.id,
-        type: 'messagesSeen',
-        subtype: 'begin',
-        subsubtype: 'anew',
-        booleanValue: 1
-      }
+    const statusCommand = this.client.commandHandler.modules.get('status')
+    const [, created] = await statusCommand.getState({
+      queryType: 'findOrCreate',
+      guild: message.guild,
+      user: message.author,
+      type: 'messagesSeen',
+      subtype: 'begin',
+      subsubtype: 'anew',
+      booleanValue: 1
     })
 
     // Message already seen.
     if (created === false) {
-      return message.reply(`*you've already begun. Try \`${BOT_COMMAND_PREFIX} status\` or \`${BOT_COMMAND_PREFIX} timers\`.*`)
+      return message.reply(`*you've already begun. Try \`${BOT_COMMAND_PREFIX} kill 1 mosquito\`.*`)
     }
 
     // New players start in Outt's Butte.
@@ -128,6 +127,7 @@ class BeginCommand extends Command {
     })
 
     // "It goes Inns your Mouth and Outt's your Butte!"
+    const outtsButteLocation = this.client.locationHandler.modules.get('outtsButte')
     return message.reply(new Discord.MessageEmbed()
       .setColor('#ff0000')
       .setTitle('Docking at Outt\'s Butte')

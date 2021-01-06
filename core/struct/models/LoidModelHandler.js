@@ -26,7 +26,7 @@ class LoidModelHandler extends AkairoHandler {
    * Loads a model, can be a module class or a filepath.
    * @param {string|Function} thing - Module class or path to module.
    * @param {boolean} [isReload=false] - Whether this is a reload or not.
-   * @return {AkairoModule}
+   * @returns {AkairoModule}
    */
   load (thing, isReload = false) {
     const model = super.load(thing, isReload)

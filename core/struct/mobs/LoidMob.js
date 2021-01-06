@@ -43,9 +43,9 @@ class LoidMob extends AkairoModule {
    * @abstract
    * @param {string} reductionType - The type of reduction level.
    * @param {float} reductionLevel - The amount of reduction level.
-   * @param {Discord.Guild} guild - The guild this request is from.
-   * @param {Discord.User} user - The user this request is for.
-   * @return {object} duration - An object with 'seconds', 'minutes', etc.
+   * @param {Guild} guild - The guild this request is from.
+   * @param {User} user - The user this request is for.
+   * @returns {object} duration - An object with 'seconds', 'minutes', etc.
    */
   durationAt (reductionType, reductionLevel, guild, user) {
     throw new AkairoError('NOT_IMPLEMENTED', this.constructor.name, 'durationAt')
@@ -55,9 +55,9 @@ class LoidMob extends AkairoModule {
    * Return a duration object for a mob.
    * @param {string} reductionType - The type of reduction level.
    * @param {float} reductionLevel - The amount of reduction level.
-   * @param {Discord.Guild} guild - The guild this request is from.
-   * @param {Discord.User} user - The user this request is for.
-   * @return {object} duration - An object with 'seconds', 'minutes', etc.
+   * @param {Guild} guild - The guild this request is from.
+   * @param {User} user - The user this request is for.
+   * @returns {object} duration - An object with 'seconds', 'minutes', etc.
    */
   getDurationAt (reductionType, reductionLevel, guild, user) {
     return this.durationAt(reductionType, reductionLevel, guild, user)

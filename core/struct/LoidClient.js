@@ -87,7 +87,7 @@ class LoidClient extends AkairoClient {
   /**
    * Load addon files in directories.
    * @param {Array} directories - The directories to search through.
-   * @return {LoidClient}
+   * @returns {LoidClient}
    */
   loadAddonsIn (directories) {
     this.loadAddonCommandsIn(directories)
@@ -100,7 +100,7 @@ class LoidClient extends AkairoClient {
   /**
    * Load addon *.command.js files in directories.
    * @param {Array} directories - The directories to search through.
-   * @return {LoidClient}
+   * @returns {LoidClient}
    */
   loadAddonCommandsIn (directories) {
     for (const directory of directories) {
@@ -124,7 +124,7 @@ class LoidClient extends AkairoClient {
   /**
    * Load addon *.location.js files in directories.
    * @param {Array} directories - The directories to search through.
-   * @return {LoidClient}
+   * @returns {LoidClient}
    */
   loadAddonLocationsIn (directories) {
     for (const directory of directories) {
@@ -143,7 +143,7 @@ class LoidClient extends AkairoClient {
   /**
    * Load addon *.mob.js files in directories.
    * @param {Array} directories - The directories to search through.
-   * @return {LoidClient}
+   * @returns {LoidClient}
    */
   loadAddonMobsIn (directories) {
     for (const directory of directories) {
@@ -162,7 +162,7 @@ class LoidClient extends AkairoClient {
   /**
    * Load addon *.model.js files in directories.
    * @param {Array} directories - The directories to search through.
-   * @return {LoidClient}
+   * @returns {LoidClient}
    */
   loadAddonModelsIn (directories) {
     for (const directory of directories) {

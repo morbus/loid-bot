@@ -20,14 +20,14 @@ class TimersCommand extends Command {
 
   /**
    * Add a timer.
-   * @param {Object} options - The options for the timer.
-   * @param {Discord.Guild} options.guild - The guild the timer is being added for.
-   * @param {Discord.User} options.user - The user the timer is being added for.
+   * @param {object} options - The options for the timer.
+   * @param {Guild} options.guild - The guild the timer is being added for.
+   * @param {User} options.user - The user the timer is being added for.
    * @param {string} options.type - The type of timer (e.g., kill, make, explore).
    * @param {string|null} options.subtype - The subtype of timer (e.g., rat, weapon, village).
    * @param {string|null} options.subsubtype - The subsubtype of timer (e.g., giant, vorpalSword, outtsButte).
-   * @param {Object} options.duration - An object with 'seconds', 'minutes', etc.
-   * @return {Promise<void>}
+   * @param {object} options.duration - An object with 'seconds', 'minutes', etc.
+   * @returns {Promise<void>}
    */
   async addTimer (options) {
     const expiresAt = DateTime.local().plus(Duration.fromObject(options.duration))
@@ -43,18 +43,17 @@ class TimersCommand extends Command {
 
   /**
    * Return a count of available timers for a guild member.
-   * @param {Object} options - The options used for finding available timers.
-   * @param {Discord.Guild} options.guild - The guild the timer is being added for.
-   * @param {Discord.User} options.user - The user the timer is being added for.
-   * @return {Promise<number>} availableTimers - The number of available timers.
+   * @param {object} options - The options used for finding available timers.
+   * @param {Guild} options.guild - The guild the timer is being added for.
+   * @param {User} options.user - The user the timer is being added for.
+   * @returns {Promise<number>} availableTimers - The number of available timers.
    */
   async getAvailableTimers (options) {
-    const maximumTimers = await this.client.sequelize.models.guildMemberState.findOne({
-      where: {
-        guildId: options.guild.id,
-        userId: options.user.id,
-        type: 'maximumTimers'
-      }
+    const statusCommand = this.client.commandHandler.modules.get('status')
+    const maximumTimers = await statusCommand.getState({
+      guild: options.guild,
+      user: options.user,
+      type: 'maximumTimers'
     })
 
     const existingTimers = await this.client.sequelize.models.guildMemberTimers.count({
