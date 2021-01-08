@@ -114,7 +114,7 @@ class StatusCommand extends Command {
     const { booleanValue, floatValue, stringValue, jsonValue, ...existingStateLookup } = options
     const existingState = await this.getState(existingStateLookup)
 
-    // Update s state...
+    // Update state...
     if (existingState) {
       existingState.set('booleanValue', options.booleanValue ?? null)
       existingState.set('floatValue', options.floatValue ?? null)

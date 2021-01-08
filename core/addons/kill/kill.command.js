@@ -50,7 +50,7 @@ class KillCommand extends Command {
 
     // With no args, show and resolve timers.
     if (!args.count && !args.mobId) {
-      // @todo display current kill timers
+      // @todo display current kill timers?
       // @todo resolve completed kill timers.
     }
 
@@ -75,7 +75,7 @@ class KillCommand extends Command {
 
     // We're ready to add some timers, assuming there are some to spare.
     const timerCommand = this.client.commandHandler.modules.get('timers')
-    const availableTimers = await timerCommand.getAvailableTimers({ guild: message.guild, user: message.author })
+    const [availableTimers] = await timerCommand.getAvailableTimers({ guild: message.guild, user: message.author })
 
     if (availableTimers <= 0) {
       return message.reply('*you do not have enough time to kill more.*')
@@ -130,7 +130,7 @@ class KillCommand extends Command {
           *You will always succeed at killing; it is simply a matter of how
           quickly. Deaths for the weakest mobs, like a \`mosquito\`, only
           take 30 seconds. Stronger mobs and bosses can take hours, days,
-          or weeks. The more you kill, the faster you kill, earning **kill
+          or months. The more you kill, the faster you kill, earning **kill
           reduction levels (KRL)** that speed your efforts against all mobs.* 
         `}
 

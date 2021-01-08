@@ -123,7 +123,7 @@ class BeginCommand extends Command {
       guild: message.guild,
       user: message.author,
       type: 'maximumTimers',
-      floatValue: 2
+      floatValue: 3
     })
 
     // "It goes Inns your Mouth and Outt's your Butte!"
